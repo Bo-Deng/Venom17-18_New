@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\libs\Vuforia.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="91b46366eb9f8203073ee2935087c097c888c0ed">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\Vuforia_0b04193490000369c6ab551fdc0480dafd5f857f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\3f0bc293d4794a24fad657a2cfcd4b33e35c0cc0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="7cd44f3e9b0804d848acff8c77b242d8530c6b17">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_faf0b606d6b97d0a215fedb4821ed880732fae58.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\8122a2e64bf804b1b50fe9e3deccaeba6012c8db\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9403be210676ed196cdcc64c7391b9ae2361c174">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_7ca279dffd7caab5d26d631f81a84409a5cd0b90.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\libs\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="5a214d3b1b12e72f4fb0d5d5d8d0ec43c96de2b5">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_4ab504d60838d1b9b2a330fde14c4008e3d32314.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\Documents\GitHub\Venom17-18\FtcRobotController\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d9a2ec16b4264328b280413e774f481527629e33">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_6f0652df82aec15e41697a8d852b361e42f0a170.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\868ee914e13a6ae4a27a078335883d6fc04978be\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="a336efc08e0013b3912c24180e78bdb9399effdf">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_35f305886aa07d55897c5ea6e07c554abdfa1559.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e32f015ff718a2a996876b1c37806182df2aaa93">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_10f566a75f979d44bd858288ca40fa5d0789b3f8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\304812f7011d5397c7ae22aa277c7ad26a29894c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8067b48db34001e247fa000f2833a85c18602eb4">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_8ea12811c368a7614c18dcfb2832eb407c4e1a87.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\libs\gson-2.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e118dd0900e4a18fb928ebb8df2d9fbda78f2b5d">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\gson-2.8.0_5a2ba32472a6a6551868755a8180c2745d17fdc4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\libs\gson-extras-0.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b30c2655badcc7ce97f84e49f777b7dd154bad57">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\gson-extras-0.2.1_7d936759fad5520648f672994249b0144cc04aef.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\c6f5c219d7866eb1dad803d745f7e32cc4c8ed61\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9dafed45e330aec14abcce05bdb7bbdb2a2d7092">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_ed04382424922c29cf49498908378c76e822f06d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\30666285662d96d4641bb0491264b3d36ff33547\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="0afd6a8e22ccd6505d194cc3872cdc9804785f0f">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\classes_7a56769b4694cf55338f5aaa0979e1dcb55403eb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bo\.android\build-cache\da07b8f4d19cf647da13b9c13e6d83d32e9e1efb\output\jars\libs\javac.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c576121aac49e547b39aedfb1daa29782db4166c">
+        <dex dex="C:\Users\Bo\Documents\GitHub\Venom17-18\TeamCode\build\intermediates\pre-dexed\debug\javac_6986cc4cb80e01dd7d64dd869960b66edeec653e.jar" />
+    </item>
+
+</items>

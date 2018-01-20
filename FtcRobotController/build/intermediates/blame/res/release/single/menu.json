@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\build\\intermediates\\res\\merged\\release\\menu\\ftc_robot_controller.xml",
+        "source": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\src\\main\\res\\menu\\ftc_robot_controller.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\build\\intermediates\\res\\merged\\release\\menu\\main_menu.xml",
+        "source": "C:\\Users\\Bo\\.android\\build-cache\\30666285662d96d4641bb0491264b3d36ff33547\\output\\res\\menu\\main_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\build\\intermediates\\res\\merged\\release\\menu\\menu_server.xml",
+        "source": "C:\\Users\\Bo\\.android\\build-cache\\3f0bc293d4794a24fad657a2cfcd4b33e35c0cc0\\output\\res\\menu\\menu_server.xml"
+    }
+]
