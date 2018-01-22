@@ -43,8 +43,8 @@ public class CustomOpMode extends OpMode {
     ModernRoboticsI2cRangeSensor rangeSensorL;
     ModernRoboticsI2cRangeSensor rangeSensorR;
 
-    DcMotor motorXLift;
-    DcMotor motorYLift;
+    DcMotor motorLiftL;
+    DcMotor motorLiftR;
 
     DcMotor motorRelicTop;
     DcMotor motorRelicBottom;
@@ -57,7 +57,8 @@ public class CustomOpMode extends OpMode {
     double sf = 1.3;
 
     //left hug variables
-    double leftOpenPos = .649;
+    double leftInitPos = .649;
+    double leftOpenPos = .55;
     double leftThreadPos = .32;
     double leftClampPos = .18;
     //right hug variables
@@ -95,10 +96,10 @@ public class CustomOpMode extends OpMode {
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
 
-        motorXLift = map.dcMotor.get("motorXLift");
-        motorYLift = map.dcMotor.get("motorYLift");
+        motorLiftL = map.dcMotor.get("motorLiftL");
+        motorLiftR = map.dcMotor.get("motorLiftR");
 
-        servoLHug.setPosition(leftOpenPos);
+        servoLHug.setPosition(leftInitPos);
         servoRHug.setPosition(rightOpenPos);
 
         servoUpDownArm.setPosition(.73);
@@ -120,13 +121,14 @@ public class CustomOpMode extends OpMode {
 
         motorFR.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBR.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorLiftL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorXLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorYLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLiftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLiftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRelicTop.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRelicBottom.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -134,8 +136,8 @@ public class CustomOpMode extends OpMode {
         motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorXLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorYLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorLiftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorLiftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRelicTop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRelicBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

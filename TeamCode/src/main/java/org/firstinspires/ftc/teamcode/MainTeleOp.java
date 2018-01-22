@@ -45,23 +45,26 @@ public class MainTeleOp extends CustomOpMode {
 
         // the signs might need to be switched
         if (gamepad2.left_stick_y > 0.1) {
-            motorXLift.setPower(gamepad2.left_stick_y / 1.2);
+            motorRelicTop.setPower(gamepad2.left_stick_y);
         }
         else if (gamepad2.left_stick_y < -0.1) {
-            motorXLift.setPower(gamepad2.left_stick_y / 1.2);
+            motorRelicTop.setPower(gamepad2.left_stick_y);
         }
         else {
-            motorXLift.setPower(0);
+            motorRelicTop.setPower(0);
         }
 
         if (gamepad2.right_stick_y > 0.1) {
-            motorYLift.setPower(gamepad2.right_stick_y);
+            motorLiftL.setPower(gamepad2.right_stick_y);
+            motorLiftR.setPower(gamepad2.right_stick_y);
         }
         else if (gamepad2.right_stick_y < -0.1) {
-            motorYLift.setPower(gamepad2.right_stick_y);
+            motorLiftL.setPower(gamepad2.right_stick_y);
+            motorLiftR.setPower(gamepad2.right_stick_y);
         }
         else {
-            motorYLift.setPower(0);
+            motorLiftL.setPower(0);
+            motorLiftR.setPower(0);
         }
 
         double yL = -gamepad1.left_stick_y;
@@ -199,6 +202,10 @@ public class MainTeleOp extends CustomOpMode {
             servoRHug.setPosition(rightThreadPos);
         }
 
+        if (servoLHug.getPosition() > .62) {
+            servoLHug.setPosition(leftOpenPos);
+        }
+
 
         if(gamepad2.a) { //nothing??? , commented out for now
             servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //.775
@@ -237,8 +244,8 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("rangeL cm: ", getLeftDistance());
         //telemetry.addData("rangeR cm: ", getRightDistance());
         telemetry.addData("motorScale: ", motorScale);
-        telemetry.addData("XLift: ", motorXLift.getCurrentPosition());
-        telemetry.addData("YLift: ", motorYLift.getCurrentPosition());
+        //telemetry.addData("XLift: ", motorXLift.getCurrentPosition());
+        //telemetry.addData("YLift: ", motorYLift.getCurrentPosition());
         telemetry.addData("servoLHug Position: ", servoLHug.getPosition());
         telemetry.addData("servoRHug Position: ", servoRHug.getPosition());
         telemetry.addData("servoLeftRight Position: ", servoLeftRightArm.getPosition());
