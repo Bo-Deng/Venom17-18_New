@@ -228,8 +228,8 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("MotorFREncoder", motorFR.getCurrentPosition());
         //telemetry.addData("MotorBLEncoder", motorBL.getCurrentPosition());
         //telemetry.addData("MotorBREncoder", motorBR.getCurrentPosition());
-        //telemetry.addData("rangeL cm: ", getLeftDistance());
-        //telemetry.addData("rangeR cm: ", getRightDistance());
+        telemetry.addData("rangeL cm: ", getLeftDistance() + "");
+        telemetry.addData("rangeR cm: ", getRightDistance());
         telemetry.addData("motorScale: ", motorScale);
         //telemetry.addData("XLift: ", motorXLift.getCurrentPosition());
         //telemetry.addData("YLift: ", motorYLift.getCurrentPosition());

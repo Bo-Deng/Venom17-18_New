@@ -527,8 +527,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
-            PIDchange = Range.clip(kP * (getLeftDistance() - targetRange), -.6, .6);
+        while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+            PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .35 ? .35 : PIDchange;
             else if (PIDchange < 0)
@@ -724,8 +724,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void liftDown() {
         while (motorLiftR.getCurrentPosition() < 0 && opModeIsActive()) {
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
+            motorLiftL.setPower(-1);
+            motorLiftR.setPower(1);
         }
         motorLiftL.setPower(0);
         motorLiftR.setPower(0);
