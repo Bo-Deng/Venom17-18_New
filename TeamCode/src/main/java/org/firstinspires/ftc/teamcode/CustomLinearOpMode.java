@@ -45,9 +45,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     Servo servoUpDownArm;
     Servo servoLeftRightArm;;
 
-
-    DcMotor motorXLift;
-    DcMotor motorYLift;
+    DcMotor motorLiftL;
+    DcMotor motorLiftR;
 
     String AutoColor;
     char template;
@@ -108,6 +107,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         motorFR.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBR.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        motorLiftL = map.dcMotor.get("motorLiftL");
+        motorLiftR = map.dcMotor.get("motorLiftR");
+
         rangeSensorL = map.get(ModernRoboticsI2cRangeSensor.class, "rangeL");
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
 
@@ -115,9 +117,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoRHug = map.servo.get("servoRHug");
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
-
-        motorXLift = map.dcMotor.get("motorXLift");
-        motorYLift = map.dcMotor.get("motorYLift");
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
         imu.IMUinit(hardwareMap);
@@ -363,12 +362,12 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         if (squares > 0) {
-            while (Math.abs(motorFR.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
+            while (Math.abs(motorBL.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(power);
             }
         }
         else {
-            while (-Math.abs(motorFR.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
+            while (-Math.abs(motorBL.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(-power);
             }
         }
@@ -512,8 +511,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
-            PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
+        while(Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+            PIDchange = Range.clip(kP * (getLeftDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .35 ? .35 : PIDchange;
             else if (PIDchange < 0)
@@ -705,27 +704,31 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoRHug.setPosition(rightClampPos);
         Thread.sleep(200);
 
-        times.reset();
+        /*times.reset();
         while (times.milliseconds() < 120 && opModeIsActive()) {
             motorXLift.setPower(-.75);
         }
         motorXLift.setPower(0);
-        sleep(100);
+        sleep(100); */
 
         //lift block off ground?
         times.reset();
         while (times.milliseconds() < 500 && opModeIsActive()) {
-            motorYLift.setPower(-1);
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
         }
-        motorYLift.setPower(0);
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
         Thread.sleep(200);
     }
 
     public void liftDown() {
-        while (motorYLift.getCurrentPosition() < 0 && opModeIsActive()) {
-            motorYLift.setPower(1);
+        while (motorLiftR.getCurrentPosition() < 0 && opModeIsActive()) {
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
         }
-        motorYLift.setPower(0);
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
     }
 
     public void pivot(double desiredAngle) {
