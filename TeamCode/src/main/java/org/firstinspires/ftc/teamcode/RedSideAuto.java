@@ -51,7 +51,7 @@ public class RedSideAuto extends CustomLinearOpMode {
             DebugLog.LOGE("Template: ", "R");
         } stopMotors();
 
-        //liftDown();
+        liftDown();
         Thread.sleep(500);
 
         servoLHug.setPosition(.4);
