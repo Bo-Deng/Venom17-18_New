@@ -163,21 +163,21 @@ public class CustomOpMode extends OpMode {
         motorBL.setMode(runMode);
     }
 
-    /*public double getRightDistance() {
+    public double getRightDistance() {
         double dist = rangeSensorR.getDistance(DistanceUnit.CM);
-        while (dist > 1000 || Double.isNaN(dist)) {
+        /*while (dist > 1000 || Double.isNaN(dist)) {
             dist = rangeSensorR.getDistance(DistanceUnit.CM);
-        }
+        }*/
         return dist;
     }
 
     public double getLeftDistance() {
         double dist = rangeSensorL.getDistance(DistanceUnit.CM);
-        while (dist > 1000 || Double.isNaN(dist)) {
+        /*while (dist > 1000 || Double.isNaN(dist)) {
             dist = rangeSensorL.getDistance(DistanceUnit.CM);
-        }
+        }*/
         return dist;
-    } */
+    }
     public double rightABSMotorVal(double joyStickVal) {
         if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
             return joyStickVal;
