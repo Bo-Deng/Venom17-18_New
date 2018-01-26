@@ -4,9 +4,11 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -71,6 +73,11 @@ public class CustomOpMode extends OpMode {
     double rotOpenPos = .8175;
     double rotClosePos = .072;
 
+    AnalogInput button;
+
+
+   //AnalogInput button;
+
     public static final String TAG = "Vuforia VuMark Sample";
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
@@ -103,7 +110,7 @@ public class CustomOpMode extends OpMode {
         servoRHug.setPosition(rightOpenPos);
 
         servoUpDownArm.setPosition(.73);
-        servoLeftRightArm.setPosition(.28);
+        servoLeftRightArm.setPosition(.35);
 
         servoRelicGrab = map.servo.get("servoRelicGrab");
         servoRelicRot = map.servo.get("servoRelicRot");
@@ -113,8 +120,6 @@ public class CustomOpMode extends OpMode {
 
         motorRelicTop = map.dcMotor.get("motorRelicTop");
         motorRelicBottom = map.dcMotor.get("motorRelicBottom");
-
-
 
         rangeSensorL = map.get(ModernRoboticsI2cRangeSensor.class, "rangeL");
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
@@ -141,6 +146,7 @@ public class CustomOpMode extends OpMode {
         motorRelicTop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRelicBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        button = hardwareMap.get(AnalogInput.class, "button");
 
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
@@ -157,7 +163,7 @@ public class CustomOpMode extends OpMode {
         motorBL.setMode(runMode);
     }
 
-    public double getRightDistance() {
+    /*public double getRightDistance() {
         double dist = rangeSensorR.getDistance(DistanceUnit.CM);
         while (dist > 1000 || Double.isNaN(dist)) {
             dist = rangeSensorR.getDistance(DistanceUnit.CM);
@@ -171,32 +177,32 @@ public class CustomOpMode extends OpMode {
             dist = rangeSensorL.getDistance(DistanceUnit.CM);
         }
         return dist;
-    }
+    } */
     public double rightABSMotorVal(double joyStickVal) {
-        /*if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
+        if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
             return joyStickVal;
-        }*/
+        }
         if (-joyStickVal > motorBR.getPower() && signsAreDifferent(-joyStickVal, motorBR.getPower())) {
-            return Range.clip(motorBR.getPower() + .1, -1, 1);
+            return Range.clip(motorBR.getPower() + .1 * 4, -1, 1);
         }
         else if (-joyStickVal < motorBR.getPower() && signsAreDifferent(-joyStickVal, motorBR.getPower()))
-            return Range.clip(motorBR.getPower() - .1, -1, 1);
+            return Range.clip(motorBR.getPower() - .1 * 4, -1, 1);
         else return -joyStickVal;
     }
     public double leftABSMotorVal(double joyStickVal) {
-        /*if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
+        if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
             return joyStickVal;
-        }*/
+        }
         if (-joyStickVal > motorBL.getPower() && signsAreDifferent(-joyStickVal, motorBL.getPower())) {
-            return Range.clip(motorBL.getPower() + .1, -1, 1);
+            return Range.clip(motorBL.getPower() + .1 * 4, -1, 1);
         }
         else if (-joyStickVal < motorBL.getPower() && signsAreDifferent(-joyStickVal, motorBL.getPower()))
-            return Range.clip(motorBL.getPower() - .1, -1, 1);
+            return Range.clip(motorBL.getPower() - .1 * 4, -1, 1);
         else return -joyStickVal;
     }
 
     public void stopMotor() {
-        double c = .1;
+        double c = .1 * 4;
         if (motorBL.getPower() > 0) {
             motorBL.setPower(Range.clip(motorBL.getPower() - c, 0, 1));
         }
@@ -228,5 +234,8 @@ public class CustomOpMode extends OpMode {
         if (x < 0)
             return y > 0;
         return false;
+    }
+    public boolean isButtonPressed() {
+        return button.getVoltage() <= 2.0400;
     }
 }
