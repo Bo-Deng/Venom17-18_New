@@ -33,6 +33,7 @@ public class RedSideAuto extends CustomLinearOpMode {
         Thread.sleep(500);
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
+        template = 'C';
 
         boolean side = true;
         if (template == 'L') {
@@ -42,7 +43,7 @@ public class RedSideAuto extends CustomLinearOpMode {
 
         } else if (template == 'C') {
             // align with center column
-            strafeRedAssistedPID( 35, 90);
+            strafeRedAssistedPID( 36.7, 90);
             DebugLog.LOGE("Template: ", "C");
 
         } else if (template == 'R') {

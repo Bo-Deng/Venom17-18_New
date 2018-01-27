@@ -6,6 +6,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsUsbServoController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -38,6 +39,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     IMU imu;
     ModernRoboticsI2cRangeSensor rangeSensorL;
     ModernRoboticsI2cRangeSensor rangeSensorR;
+    AnalogInput button;
 
     Servo servoLHug;
     Servo servoRHug;
@@ -112,6 +114,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         rangeSensorL = map.get(ModernRoboticsI2cRangeSensor.class, "rangeL");
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
+        button = hardwareMap.get(AnalogInput.class, "button");
+
 
         servoLHug = map.servo.get("servoLHug");
         servoRHug = map.servo.get("servoRHug");
@@ -511,8 +515,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
-            PIDchange = Range.clip(kP * (getLeftDistance() - targetRange), -.6, .6);
+        while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+            PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .35 ? .35 : PIDchange;
             else if (PIDchange < 0)
@@ -527,8 +531,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
-            PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
+        while(Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+            PIDchange = Range.clip(kP * (getLeftDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .35 ? .35 : PIDchange;
             else if (PIDchange < 0)
@@ -595,7 +599,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void Pturn(double angle) throws InterruptedException {
-        double kP = .7/90;
+        double kP = .6
+                /90;
         double PIDchange;
         double angleDiff = imu.getTrueDiff(angle);
         times.reset();
@@ -627,10 +632,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void knockBall(String color) throws InterruptedException {
         servoUpDownArm.setPosition(.11);
-        servoLeftRightArm.setPosition(.27);
+        servoLeftRightArm.setPosition(.24);
 
         Thread.sleep(1000);
-
 
         if (jewelIsRed && color.equals("RED")) {
            servoLeftRightArm.setPosition(0);
@@ -723,7 +727,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void liftDown() {
-        while (motorLiftR.getCurrentPosition() < 0 && opModeIsActive()) {
+        while (!isButtonPressed() && opModeIsActive()) {
             motorLiftL.setPower(-1);
             motorLiftR.setPower(1);
         }
@@ -746,5 +750,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMotors(-.4, -.4, -.4, -.4);
         sleep(100);
         stopMotors();
+    }
+
+    public boolean isButtonPressed() {
+        return button.getVoltage() < 2.042;
     }
 }

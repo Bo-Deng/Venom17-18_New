@@ -195,6 +195,10 @@ public class MainTeleOp extends CustomOpMode {
             servoLHug.setPosition(leftOpenPos);
         }
 
+        if (servoRHug.getPosition() < .48) {
+            servoRHug.setPosition(rightOpenPos);
+        }
+
 
         if (gamepad2.a) { //nothing??? , commented out for now
             servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //.775
@@ -230,6 +234,7 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("MotorBREncoder", motorBR.getCurrentPosition());
        // telemetry.addData("rangeL cm: ", getLeftDistance() + "");
         //telemetry.addData("rangeR cm: ", getRightDistance());
+        telemetry.addData("button", isButtonPressed());
         telemetry.addData("motorScale: ", motorScale);
         //telemetry.addData("XLift: ", motorXLift.getCurrentPosition());
         //telemetry.addData("YLift: ", motorYLift.getCurrentPosition());

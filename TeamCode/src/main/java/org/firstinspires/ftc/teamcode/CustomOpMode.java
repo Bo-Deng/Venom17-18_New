@@ -64,7 +64,8 @@ public class CustomOpMode extends OpMode {
     double leftThreadPos = .32;
     double leftClampPos = .18;
     //right hug variables
-    double rightOpenPos = .43;
+    double rightInitPos = .43;
+    double rightOpenPos = .49;
     double rightThreadPos = .8;
     double rightClampPos = 1.0;
 
@@ -107,7 +108,7 @@ public class CustomOpMode extends OpMode {
         motorLiftR = map.dcMotor.get("motorLiftR");
 
         servoLHug.setPosition(leftInitPos);
-        servoRHug.setPosition(rightOpenPos);
+        servoRHug.setPosition(rightInitPos);
 
         servoUpDownArm.setPosition(.73);
         servoLeftRightArm.setPosition(.35);
@@ -179,30 +180,29 @@ public class CustomOpMode extends OpMode {
         return dist;
     }
     public double rightABSMotorVal(double joyStickVal) {
-        if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
+        /*if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
             return joyStickVal;
+        }*/
+        if (-joyStickVal >= motorBR.getPower()) {
+            return Range.clip(motorBR.getPower() + .4, -1, -joyStickVal);
         }
-        if (-joyStickVal > motorBR.getPower() && signsAreDifferent(-joyStickVal, motorBR.getPower())) {
-            return Range.clip(motorBR.getPower() + .1 * 4, -1, 1);
+        else if (-joyStickVal < motorBR.getPower()) {
+            return Range.clip(motorBR.getPower() - .4, -joyStickVal, 1);
         }
-        else if (-joyStickVal < motorBR.getPower() && signsAreDifferent(-joyStickVal, motorBR.getPower()))
-            return Range.clip(motorBR.getPower() - .1 * 4, -1, 1);
         else return -joyStickVal;
     }
     public double leftABSMotorVal(double joyStickVal) {
-        if (Math.abs(joyStickVal - motorBL.getPower()) < 1) {
-            return joyStickVal;
+        if (-joyStickVal >= motorBL.getPower()) {
+            return Range.clip(motorBL.getPower() + .4, -1, -joyStickVal);
         }
-        if (-joyStickVal > motorBL.getPower() && signsAreDifferent(-joyStickVal, motorBL.getPower())) {
-            return Range.clip(motorBL.getPower() + .1 * 4, -1, 1);
+        else if (-joyStickVal < motorBL.getPower()) {
+            return Range.clip(motorBL.getPower() - .4, -joyStickVal, 1);
         }
-        else if (-joyStickVal < motorBL.getPower() && signsAreDifferent(-joyStickVal, motorBL.getPower()))
-            return Range.clip(motorBL.getPower() - .1 * 4, -1, 1);
         else return -joyStickVal;
     }
 
     public void stopMotor() {
-        double c = .1 * 4;
+        double c = .4;
         if (motorBL.getPower() > 0) {
             motorBL.setPower(Range.clip(motorBL.getPower() - c, 0, 1));
         }
@@ -236,6 +236,6 @@ public class CustomOpMode extends OpMode {
         return false;
     }
     public boolean isButtonPressed() {
-        return button.getVoltage() <= 2.0400;
+        return button.getVoltage() < 2.042;
     }
 }
