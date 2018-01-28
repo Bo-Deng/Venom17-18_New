@@ -46,24 +46,26 @@ public class RedStraightAuto extends CustomLinearOpMode {
         grabBlock();
         Thread.sleep(200);
 
-        moveSquares(.60, .20);
+        moveSquares(.35, .20);
         stopMotors();
         Thread.sleep(500);
 
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
+        template = 'L';
+
         if (template == 'L') {
             //strafe left
-            strafeRedAssisted(.5, 78, 0);
+            strafeRedAssistedPID(80.4, 0);
 
         } else if (template == 'C') {
             // align with center column
-            strafeRedAssisted(.5, 61, 0);
+            strafeRedAssistedPID(62.9, 0);
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssisted(.5, 42, 0);
+            strafeRedAssistedPID(46, 0);
         } stopMotors();
 
         liftDown();
