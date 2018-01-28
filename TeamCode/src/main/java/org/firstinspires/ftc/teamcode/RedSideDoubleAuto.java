@@ -7,8 +7,8 @@ import com.vuforia.ar.pl.DebugLog;
  * Created by Ryan Branstetter on 10/4/17.
  */
 
-@Autonomous(name = "RedSideAuto", group = "autonomous")
-public class RedSideAuto extends CustomLinearOpMode {
+@Autonomous(name = "RedSideDoubleAuto", group = "autonomous")
+public class RedSideDoubleAuto extends CustomLinearOpMode {
     public void runOpMode() throws InterruptedException {
         initStuff(hardwareMap);
 
@@ -52,14 +52,22 @@ public class RedSideAuto extends CustomLinearOpMode {
         } stopMotors();
 
         liftDown();
-        Thread.sleep(500);
+        Thread.sleep(200);
 
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
 
         wiggle(.4, 90);
         stopMotors();
-        sleep(250);
+        sleep(200);
         backUp();
+        sleep(200);
+        Pturn(-90);
+        moveSquares(1.5, 1);
+        grabBlock();
+        Pturn(0);
+        moveSquares(2.75, 1);
+
+
     }
 }

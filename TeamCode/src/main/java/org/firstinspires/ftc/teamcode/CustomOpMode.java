@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -74,7 +75,7 @@ public class CustomOpMode extends OpMode {
     double rotOpenPos = .8175;
     double rotClosePos = .072;
 
-    AnalogInput button;
+    DigitalChannel button;
 
 
    //AnalogInput button;
@@ -147,7 +148,7 @@ public class CustomOpMode extends OpMode {
         motorRelicTop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRelicBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        button = hardwareMap.get(AnalogInput.class, "button");
+        button = hardwareMap.get(DigitalChannel.class, "button");
 
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
@@ -236,6 +237,6 @@ public class CustomOpMode extends OpMode {
         return false;
     }
     public boolean isButtonPressed() {
-        return button.getVoltage() < 2.042;
+        return button.getState();
     }
 }

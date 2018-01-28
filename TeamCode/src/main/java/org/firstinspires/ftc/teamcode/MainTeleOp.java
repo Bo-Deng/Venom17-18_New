@@ -55,7 +55,7 @@ public class MainTeleOp extends CustomOpMode {
         if (gamepad2.right_stick_y < -0.1) {
             motorLiftL.setPower(gamepad2.right_stick_y / 2);
             motorLiftR.setPower(gamepad2.right_stick_y / 2);
-        } else if (gamepad2.right_stick_y > 0.1 && !isButtonPressed()) {
+        } else if (gamepad2.right_stick_y > 0.1 /*&& !isButtonPressed()*/) {
             motorLiftL.setPower(gamepad2.right_stick_y / 2);
             motorLiftR.setPower(gamepad2.right_stick_y / 2);
         } else {
@@ -236,8 +236,8 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("rangeR cm: ", getRightDistance());
         telemetry.addData("button", isButtonPressed());
         telemetry.addData("motorScale: ", motorScale);
-        //telemetry.addData("XLift: ", motorXLift.getCurrentPosition());
-        //telemetry.addData("YLift: ", motorYLift.getCurrentPosition());
+        telemetry.addData("LiftL: ", motorLiftL.getCurrentPosition());
+        telemetry.addData("LiftR: ", motorLiftR.getCurrentPosition());
         telemetry.addData("servoLHug Position: ", servoLHug.getPosition());
         telemetry.addData("servoRHug Position: ", servoRHug.getPosition());
         telemetry.addData("servoLeftRight Position: ", servoLeftRightArm.getPosition());
@@ -250,7 +250,7 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("motorFL", motorFL.getCurrentPosition());
         telemetry.addData("motorBR", motorBR.getCurrentPosition());
         telemetry.addData("motorBL", motorBL.getCurrentPosition());
-        telemetry.addData( "button", button.getVoltage());
+        telemetry.addData( "button", isButtonPressed());
     }
 
 
