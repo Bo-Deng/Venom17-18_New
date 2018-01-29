@@ -1,6 +1,10 @@
 [
     {
-        "merged": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\TeamCode\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\build\\intermediates\\bundles\\default\\res\\drawable-xxhdpi-v4\\ic_launcher.png"
+        "merged": "/Users/bodeng/Documents/GitHub/Venom17-18_New/C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\TeamCode\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4\\ic_launcher.png",
+        "source": "/Users/bodeng/Documents/GitHub/Venom17-18_New/C:\\Users\\Bo\\Documents\\GitHub\\Venom17-18\\FtcRobotController\\build\\intermediates\\bundles\\default\\res\\drawable-xxhdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "/Users/bodeng/Documents/GitHub/Venom17-18_New/TeamCode/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/Users/bodeng/Documents/GitHub/Venom17-18_New/FtcRobotController/build/intermediates/bundles/default/res/drawable-xxhdpi-v4/ic_launcher.png"
     }
 ]
