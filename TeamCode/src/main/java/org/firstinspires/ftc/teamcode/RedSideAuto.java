@@ -33,12 +33,11 @@ public class RedSideAuto extends CustomLinearOpMode {
         Thread.sleep(500);
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
-        template = 'C';
 
         boolean side = true;
         if (template == 'L') {
             //strafe left
-            strafeRedAssistedPID(50, 90);
+            strafeRedAssistedPID(53.4, 90);
             DebugLog.LOGE("Template: ", "L");
 
         } else if (template == 'C') {

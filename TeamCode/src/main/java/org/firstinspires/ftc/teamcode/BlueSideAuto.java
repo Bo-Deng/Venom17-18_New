@@ -34,9 +34,10 @@ public class BlueSideAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
+        template = 'L';
         if (template == 'L') {
             //strafe left
-            strafeBlueAssistedPID(23, 90);
+            strafeBlueAssistedPID(22, 90);
             DebugLog.LOGE("VuMark: ", "L");
 
         } else if (template == 'C') {
@@ -46,7 +47,7 @@ public class BlueSideAuto extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            strafeBlueAssistedPID(57.5, 90);
+            strafeBlueAssistedPID(55.0, 90);
             DebugLog.LOGE("VuMark: ", "R");
         } stopMotors();
 
@@ -58,7 +59,7 @@ public class BlueSideAuto extends CustomLinearOpMode {
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
 
-        wiggleNoRight(.4, 90);
+        wiggle(.4, 90);
         stopMotors();
         sleep(250);
         backUp();

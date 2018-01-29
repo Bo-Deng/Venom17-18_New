@@ -39,7 +39,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     IMU imu;
     ModernRoboticsI2cRangeSensor rangeSensorL;
     ModernRoboticsI2cRangeSensor rangeSensorR;
-    AnalogInput button;
+    //AnalogInput button;
 
     Servo servoLHug;
     Servo servoRHug;
@@ -114,7 +114,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         rangeSensorL = map.get(ModernRoboticsI2cRangeSensor.class, "rangeL");
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
-        button = hardwareMap.get(AnalogInput.class, "button");
+        //button = hardwareMap.get(AnalogInput.class, "button");
 
 
         servoLHug = map.servo.get("servoLHug");
@@ -127,8 +127,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         servoLHug.setPosition(leftOpenPos);
         servoRHug.setPosition(rightOpenPos);
-        servoUpDownArm.setPosition(.94);
-        servoLeftRightArm.setPosition(.45);
+        servoUpDownArm.setPosition(1);
+        servoLeftRightArm.setPosition(.40);
 
 
         telemetry.addData("PID value = ", ".0275");
@@ -386,7 +386,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void wiggle(double power, double angle) throws InterruptedException {
         setMotors(power, power, power, power);
-        sleep(400);
+        sleep(500);
         stopMotors();
 
 
@@ -632,9 +632,10 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void knockBall(String color) throws InterruptedException {
         servoUpDownArm.setPosition(.11);
+        Thread.sleep(100);
         servoLeftRightArm.setPosition(.24);
 
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         if (jewelIsRed && color.equals("RED")) {
            servoLeftRightArm.setPosition(0);
@@ -649,7 +650,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         Thread.sleep(1000);
         servoLeftRightArm.setPosition(.3);
-        servoUpDownArm.setPosition(.55);
+        servoUpDownArm.setPosition(.75);
     }
     public void knockWrongBall(String color) throws InterruptedException {
         servoUpDownArm.setPosition(.11);
@@ -706,7 +707,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         servoLHug.setPosition(leftClampPos);
         servoRHug.setPosition(rightClampPos);
-        Thread.sleep(200);
+        Thread.sleep(400);
 
         /*times.reset();
         while (times.milliseconds() < 120 && opModeIsActive()) {
@@ -727,7 +728,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void liftDown() {
-        while (!isButtonPressed() && opModeIsActive()) {
+        while (motorLiftR.getCurrentPosition() < -700 && opModeIsActive()) {
             motorLiftL.setPower(-1);
             motorLiftR.setPower(1);
         }
@@ -752,7 +753,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         stopMotors();
     }
 
-    public boolean isButtonPressed() {
-        return button.getVoltage() < 2.042;
-    }
+    /*public boolean isButtonPressed() {
+        return button.getVersion() == 1;
+    }*/
 }

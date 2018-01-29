@@ -31,16 +31,16 @@ public class BlueStraightAuto extends CustomLinearOpMode {
 
         Pturn(-90);
         Pturn(180);
-        moveTime(200, -.30);
         stopMotors();
         Thread.sleep(500);
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
 
+
         if (template == 'L') {
             //strafe left
-            strafeBlueAssistedPID(45.5, 180);
+            strafeBlueAssistedPID(47.0, 180);
 
         } else if (template == 'C') {
             // align with center column
@@ -49,7 +49,7 @@ public class BlueStraightAuto extends CustomLinearOpMode {
         } else if (template == 'R') {
             //strafe right
             //strafeBlueAssisted(.5, 77, 180);
-            strafeBlueAssistedPID(79.7, 180);
+            strafeBlueAssistedPID(81.7, 180);
         } stopMotors();
 
         liftDown();
