@@ -53,8 +53,6 @@ public class RedStraightAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
-        template = 'L';
-
         if (template == 'L') {
             //strafe left
             strafeRedAssistedPID(80.4, 0);
