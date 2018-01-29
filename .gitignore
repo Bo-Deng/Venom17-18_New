@@ -45,3 +45,21 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.xml
+*.xml
+.idea/gradle.xml
+.idea/libraries/Analytics_release_.xml
+.idea/libraries/Blocks_release_.xml
+*.rawproto
+*.jar
+*.json
+*.json
+*.aar
+*.ap_
+*.iml
+*.iml
+.gradle/3.5/fileContent/annotation-processors.bin
+.gradle/3.5/fileContent/fileContent.lock
+*.apk
+*.jar
+*.jar
