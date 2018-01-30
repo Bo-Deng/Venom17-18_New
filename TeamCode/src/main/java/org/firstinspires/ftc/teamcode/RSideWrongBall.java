@@ -37,12 +37,12 @@ public class RSideWrongBall extends CustomLinearOpMode {
         boolean side = true;
         if (template == 'L') {
             //strafe left
-            strafeRedAssistedPID(50, 90);
+            strafeRedAssistedPID(53.4, 90);
             DebugLog.LOGE("Template: ", "L");
 
         } else if (template == 'C') {
             // align with center column
-            strafeRedAssistedPID( 35, 90);
+            strafeRedAssistedPID( 36.7, 90);
             DebugLog.LOGE("Template: ", "C");
 
         } else if (template == 'R') {

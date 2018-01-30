@@ -36,7 +36,7 @@ public class BSideWrongBall extends CustomLinearOpMode {
 
         if (template == 'L') {
             //strafe left
-            strafeBlueAssistedPID(25, 90);
+            strafeBlueAssistedPID(22, 90);
             DebugLog.LOGE("VuMark: ", "L");
 
         } else if (template == 'C') {
@@ -46,7 +46,7 @@ public class BSideWrongBall extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            strafeBlueAssistedPID(57.5, 90);
+            strafeBlueAssistedPID(55, 90);
             DebugLog.LOGE("VuMark: ", "R");
         } stopMotors();
 

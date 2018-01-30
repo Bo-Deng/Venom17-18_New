@@ -34,7 +34,6 @@ public class BlueSideAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
-        template = 'L';
         if (template == 'L') {
             //strafe left
             strafeBlueAssistedPID(22, 90);
