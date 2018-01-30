@@ -58,17 +58,17 @@ public class MainTeleOp extends CustomOpMode {
             motorLiftL.setPower(gamepad2.right_stick_y);
             motorLiftR.setPower(gamepad2.right_stick_y);
 
-        } else if (gamepad2.right_stick_y > 0.1 && button.getVoltage() < 2) {
+        } else if (gamepad2.right_stick_y > 0.1 /*&& button.getVoltage() < 2*/) {
             motorLiftL.setPower(gamepad2.right_stick_y / 2);
             motorLiftR.setPower(gamepad2.right_stick_y / 2);
 
-        } else if (button.getVoltage() > 2) {
+        } /*else if (button.getVoltage() > 2) {
             motorLiftL.setPower(-1);
             motorLiftR.setPower(-1);
         } else {
             motorLiftL.setPower(0);
             motorLiftR.setPower(0);
-        }
+        } */
 
         double yL = -gamepad1.left_stick_y;
         double yR = -gamepad1.right_stick_y;
