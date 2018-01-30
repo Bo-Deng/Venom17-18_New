@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-
 /*
 import android.graphics.Bitmap;
 import android.os.Environment;
@@ -13,10 +12,12 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.CvException;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Range;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -31,7 +32,7 @@ import java.io.IOException;
 @Autonomous (name = "JewelDetect", group = "test")
 public class JewelDetectTest extends OpModeCamera {
 
-    public void startOpenCV() { //loads openCV library from phone via openCVManager
+    private void startOpenCV() { //loads openCV library from phone via openCVManager
         BaseLoaderCallback openCVLoaderCallback = null;
         try {
             openCVLoaderCallback = new BaseLoaderCallback(hardwareMap.appContext) {
@@ -58,13 +59,13 @@ public class JewelDetectTest extends OpModeCamera {
         }
     }
 
-    public Mat imgMat; //Mat = matrix
-    public Mat CMat; //holds image data
+    private Mat imgMat; //holds image data
+    private Bitmap img;
+    private Mat CMat; //will hold circle data
 
     private double dp = 1; //ratio of input resolution  to output resolution
-    private double minDst = 100; //min distance between centers of detected circles
 
-    int loopCount = 0; //debugging purposes
+    private int loopCount = 0; //debugging purposes
 
     public void init() {
         startOpenCV(); //load opencvlibrary
@@ -77,8 +78,23 @@ public class JewelDetectTest extends OpModeCamera {
     public void loop() {
         if (imageReady()) { //when image received from camera
 
-            scanCircles();
+            img = convertYuvImageToRgb(yuvImage, width, height, 1);
+            imgMat = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
 
+            scan4Red();
+            //scan4Circles();
+            //scan4CirclesB();
+            telemetry.addData("Number of Circles", CMat.cols());
+
+            if (CMat.cols() < 0) {
+                if (getCircleData(CMat, 0)[0] <= img.getWidth() / 2)
+                    telemetry.addData("Red Jewel on", "Right");
+                else
+                    telemetry.addData("Red Jewel on", "Left");
+            }
+
+            /*
+            scan4Circles();
             telemetry.addData("Num of Circles", CMat.cols()); //return number of circles (# of columns = # of circles)
 
             if (CMat.cols() == 2) {
@@ -99,21 +115,21 @@ public class JewelDetectTest extends OpModeCamera {
                     }
                 }
             }
-            telemetry.update();
+            else
+                telemetry.addData("Circle not found", "Try Again");
+            ?/
 
-            if (loopCount < 10 && CMat.cols() == 2) { //saves first 10 successful images to phone gallery
+            if (loopCount < 10 /*&& CMat.cols() > 0 ?/) { //saves first 10 successful images to phone gallery
                 writeToFile(imgMat, CMat);  // use this method to print circles in CMat onto the image in imgMat before saving to device
                 loopCount++;
             }
 
-        } else {
+        } else
             telemetry.addData("Image not loaded", "Loop count: " + loopCount);
-            telemetry.update();
-        }
+        telemetry.update();
     }
 
-    public void writeToFile(Mat mat, Mat circles) { //debugging only; prints images into data files on phone, access through camera roll/gallery
-
+    private void writeToFile(Mat mat, Mat circles) { //debugging only; prints images into data files on phone, access through camera roll/gallery
         // Draw the circles detected
         Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB, 0); //convert to rgb (so the circle that gets drawn is colored)
 
@@ -132,6 +148,7 @@ public class JewelDetectTest extends OpModeCamera {
                 circle(mat, center, r, new Scalar(0, 0, 255), 6);
             }
         } catch (Exception e) {
+            telemetry.addData("Unable to draw circles", "Sorry");
         }
         Bitmap bmp = null;
         try {
@@ -175,7 +192,6 @@ public class JewelDetectTest extends OpModeCamera {
     }
 
     public Boolean JewelColorRED(Mat circle, int n) { //print what color each ball is (corresponds with JewelSide)
-        Bitmap img = convertYuvImageToRgb(yuvImage, width, height, 1);
         int redValue = 0;
         int blueValue = 0;
         int pix;
@@ -197,35 +213,89 @@ public class JewelDetectTest extends OpModeCamera {
             telemetry.addData("List is", "NULL");
             return null;
         }
-        if (redValue > blueValue)
-            return true;
-        return false;
+        return redValue > blueValue;
     }
 
-    public double[] getCircleData(Mat circle, int circnum) { //returns list with specific circle info
+    private double[] getCircleData(Mat circle, int circnum) { //returns list with specific circle info; double[x, y, r]
         double[] list;
         try {
             list = circle.get(0, circnum);
             return list;
         } catch (NullPointerException e){
             telemetry.addData("No Data Found", e);
-            return null;
+            return new double[3];
         }
     }
 
-    public void scanCircles() { //simplified loop
-        if (imageReady()) {
-            Bitmap img = convertYuvImageToRgb(yuvImage, width, height, 1);
-            imgMat = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
-            Utils.bitmapToMat(img, imgMat);
-            Imgproc.cvtColor(imgMat, imgMat, Imgproc.COLOR_RGB2GRAY, 0);
-            CMat = new Mat(imgMat.size(), CvType.CV_8UC1);
-            Imgproc.HoughCircles(imgMat, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, minDst, 70, 35, 75, 125);
-            telemetry.addData("Image Scan","Successful");
-            telemetry.update();
-        } else {
-            telemetry.addData("Image Scan","Failure");
-            telemetry.update();
-        }
+    private void scan4Red() { //best method that should actually work (in theory)
+        Mat red1 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+        Mat red2 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+
+        Utils.bitmapToMat(img, red1);
+        Utils.bitmapToMat(img, red2);
+
+        Imgproc.cvtColor(red1, red1, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(red2, red2, Imgproc.COLOR_RGB2HSV);
+
+        Core.inRange(red1, new Scalar(0, 100, 100), new Scalar(10, 255, 255), red1);
+        Core.inRange(red2, new Scalar(160, 100, 100), new Scalar(179, 255, 255), red2);
+
+        Mat reds = new Mat(red1.size(), CvType.CV_8UC1);
+
+        Core.addWeighted(red1, 1, red2, 1, 0, reds);
+
+        Imgproc.GaussianBlur(reds, reds, new Size(9, 9), 2, 2);
+
+        CMat = new Mat(reds.size(), CvType.CV_8UC1);
+
+        Imgproc.HoughCircles(reds, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, reds.rows() / 8, 100, 35, 75, 125);
+
+        telemetry.addData("Circle Scan", "Successful");
+    }
+
+    //alternate methods
+
+    private void scan4Circles() { //simplified loop (probably doesn't work)
+        Utils.bitmapToMat(img, imgMat);
+        Imgproc.cvtColor(imgMat, imgMat, Imgproc.COLOR_RGB2GRAY, 0);
+        CMat = new Mat(imgMat.size(), CvType.CV_8UC1);
+        Imgproc.HoughCircles(imgMat, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, imgMat.rows()/8, 100, 35, 75, 125);
+        telemetry.addData("Circle Scan","Successful");
+    }
+
+    private void scan4CirclesB() { //better method that maybe works? (no)
+        Mat red1 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+        Mat red2 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+        Mat blue1 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+        Mat blue2 = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+
+        Utils.bitmapToMat(img, red1);
+        Utils.bitmapToMat(img, red2);
+        Utils.bitmapToMat(img, blue1);
+        Utils.bitmapToMat(img, blue2);
+
+        Imgproc.cvtColor(red1, red1, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(red2, red2, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(blue1, blue1, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(blue2, blue2, Imgproc.COLOR_RGB2HSV);
+
+        Core.inRange(red1, new Scalar(0, 100, 100), new Scalar(10, 255, 255), red1);
+        Core.inRange(red2, new Scalar(160, 100, 100), new Scalar(179, 255, 255), red2);
+        Core.inRange(blue1, new Scalar(100, 150, 0), new Scalar(10, 255, 255), blue1);
+        Core.inRange(blue2, new Scalar(160, 100, 100), new Scalar(179, 255, 255), blue2);
+
+        Mat reds = new Mat(red1.size(), CvType.CV_8UC1);
+        Mat blues = new Mat(blue1.size(), CvType.CV_8UC1);
+        Mat total = new Mat(blue1.size(), CvType.CV_8UC1);
+
+        Core.addWeighted(red1, 1, red2, 1, 0, reds);
+        Core.addWeighted(blue1, 1, blue2, 1, 0, blues);
+        Core.addWeighted(reds, 1, blues, 1, 0, total);
+
+        Imgproc.GaussianBlur(total, total, new Size(9, 9), 2, 2);
+
+        Imgproc.HoughCircles(total, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, total.rows()/8, 100, 35, 50, 125);
+
+        telemetry.addData("Circle Scan","Successful");
     }
 } */
