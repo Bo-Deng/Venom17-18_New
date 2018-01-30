@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 public class MainTeleOp extends CustomOpMode {
 
     double motorScale = 1;
+    boolean gobackUp = false;
 
     public void init() {
 
@@ -52,12 +53,18 @@ public class MainTeleOp extends CustomOpMode {
             motorRelicTop.setPower(0);
         }
 
+
         if (gamepad2.right_stick_y < -0.1) {
+            motorLiftL.setPower(gamepad2.right_stick_y);
+            motorLiftR.setPower(gamepad2.right_stick_y);
+
+        } else if (gamepad2.right_stick_y > 0.1 && button.getVoltage() < 2) {
             motorLiftL.setPower(gamepad2.right_stick_y / 2);
             motorLiftR.setPower(gamepad2.right_stick_y / 2);
-        } else if (gamepad2.right_stick_y > 0.1 /*&& !isButtonPressed()*/) {
-            motorLiftL.setPower(gamepad2.right_stick_y / 2);
-            motorLiftR.setPower(gamepad2.right_stick_y / 2);
+
+        } else if (button.getVoltage() > 2) {
+            motorLiftL.setPower(-1);
+            motorLiftR.setPower(-1);
         } else {
             motorLiftL.setPower(0);
             motorLiftR.setPower(0);
@@ -200,7 +207,7 @@ public class MainTeleOp extends CustomOpMode {
         }
 
 
-        if (gamepad2.a) { //nothing??? , commented out for now
+        if (gamepad2.a) {
             servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //.775
             servoRHug.setPosition(Range.clip(servoRHug.getPosition() + .025, 0, 1));
         }
@@ -232,9 +239,9 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("MotorFREncoder", motorFR.getCurrentPosition());
         //telemetry.addData("MotorBLEncoder", motorBL.getCurrentPosition());
         //telemetry.addData("MotorBREncoder", motorBR.getCurrentPosition());
-       // telemetry.addData("rangeL cm: ", getLeftDistance() + "");
+        //telemetry.addData("rangeL cm: ", getLeftDistance() + "");
         //telemetry.addData("rangeR cm: ", getRightDistance());
-        telemetry.addData("button", isButtonPressed());
+        telemetry.addData("button", button.getVoltage());
         telemetry.addData("motorScale: ", motorScale);
         telemetry.addData("LiftL: ", motorLiftL.getCurrentPosition());
         telemetry.addData("LiftR: ", motorLiftR.getCurrentPosition());
@@ -250,7 +257,6 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("motorFL", motorFL.getCurrentPosition());
         telemetry.addData("motorBR", motorBR.getCurrentPosition());
         telemetry.addData("motorBL", motorBL.getCurrentPosition());
-        telemetry.addData( "button", isButtonPressed());
     }
 
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -75,10 +76,11 @@ public class CustomOpMode extends OpMode {
     double rotOpenPos = .8175;
     double rotClosePos = .072;
 
-    DigitalChannel button;
 
 
-   //AnalogInput button;
+
+
+    AnalogInput button;
 
     public static final String TAG = "Vuforia VuMark Sample";
     OpenGLMatrix lastLocation = null;
@@ -148,7 +150,7 @@ public class CustomOpMode extends OpMode {
         motorRelicTop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRelicBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        button = hardwareMap.get(DigitalChannel.class, "button");
+        button = hardwareMap.get(AnalogInput.class, "button");
 
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
@@ -236,7 +238,7 @@ public class CustomOpMode extends OpMode {
             return y > 0;
         return false;
     }
-    public boolean isButtonPressed() {
-        return button.getState();
-    }
+    /*public boolean isButtonPressed() {
+        return button.();
+    }*/
 }
