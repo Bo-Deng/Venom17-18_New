@@ -64,10 +64,38 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         sleep(200);
         Pturn(-90);
         moveSquares(1.5, 1);
-        grabBlock();
+        grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
         Pturn(0);
         moveSquares(2.75, 1);
 
+        DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
+        side = true;
+        if (template == 'L') {
+            //strafe left
+            strafeRedAssistedPID(53.4, 90);
+            DebugLog.LOGE("Template: ", "L");
+
+        } else if (template == 'C') {
+            // align with center column
+            strafeRedAssistedPID( 36.7, 90);
+            DebugLog.LOGE("Template: ", "C");
+
+        } else if (template == 'R') {
+            //strafe right
+            strafeRedAssistedPID(20.7, 90);
+            DebugLog.LOGE("Template: ", "R");
+        } stopMotors();
+
+        liftDown();
+        Thread.sleep(500);
+
+        servoLHug.setPosition(.4);
+        servoRHug.setPosition(.6);
+
+        wiggle(.4, 90);
+        stopMotors();
+        sleep(250);
+        backUp();
     }
 }
