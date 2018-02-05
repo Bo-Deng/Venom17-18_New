@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-/*
+
 import android.graphics.Bitmap;
 import android.os.Environment;
 
@@ -93,7 +93,7 @@ public class JewelDetectTest extends OpModeCamera {
                     telemetry.addData("Red Jewel on", "Left");
             }
 
-            /*
+
             scan4Circles();
             telemetry.addData("Num of Circles", CMat.cols()); //return number of circles (# of columns = # of circles)
 
@@ -117,9 +117,9 @@ public class JewelDetectTest extends OpModeCamera {
             }
             else
                 telemetry.addData("Circle not found", "Try Again");
-            ?/
 
-            if (loopCount < 10 /*&& CMat.cols() > 0 ?/) { //saves first 10 successful images to phone gallery
+
+            if (loopCount < 10 && CMat.cols() > 0) { //saves first 10 successful images to phone gallery
                 writeToFile(imgMat, CMat);  // use this method to print circles in CMat onto the image in imgMat before saving to device
                 loopCount++;
             }

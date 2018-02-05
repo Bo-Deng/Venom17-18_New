@@ -59,6 +59,8 @@ public class CustomOpMode extends OpMode {
     String AutoColor;
 
     double sf = 1.3;
+    double startVoltage;
+    boolean buttonEnabled = true;
 
     //left hug variables
     double leftInitPos = .649;
@@ -72,9 +74,9 @@ public class CustomOpMode extends OpMode {
     double rightClampPos = 1.0;
 
     double grabOpenPos = .925;
-    double grabClosePos = .05;
+    double grabClosePos = .025;
     double rotOpenPos = .8175;
-    double rotClosePos = .072;
+    double rotClosePos = .032;
 
 
 
@@ -119,7 +121,7 @@ public class CustomOpMode extends OpMode {
         servoRelicGrab = map.servo.get("servoRelicGrab");
         servoRelicRot = map.servo.get("servoRelicRot");
 
-        servoRelicGrab.setPosition(0);
+        servoRelicGrab.setPosition(grabClosePos);
         servoRelicRot.setPosition(0);
 
         motorRelicTop = map.dcMotor.get("motorRelicTop");
@@ -151,7 +153,7 @@ public class CustomOpMode extends OpMode {
         motorRelicBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         button = hardwareMap.get(AnalogInput.class, "button");
-
+        startVoltage = button.getVoltage();
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
         imu.IMUinit(hardwareMap);
@@ -204,6 +206,7 @@ public class CustomOpMode extends OpMode {
         else return -joyStickVal;
     }
 
+
     public void stopMotor() {
         double c = .4;
         if (motorBL.getPower() > 0) {
@@ -238,7 +241,7 @@ public class CustomOpMode extends OpMode {
             return y > 0;
         return false;
     }
-    /*public boolean isButtonPressed() {
-        return button.();
-    }*/
+    public boolean isButtonPressed() {
+        return Math.abs(button.getVoltage() - startVoltage) > .2 && buttonEnabled;
+    }
 }

@@ -15,7 +15,6 @@ import com.qualcomm.robotcore.util.Range;
 public class MainTeleOp extends CustomOpMode {
 
     double motorScale = 1;
-    boolean gobackUp = false;
 
     public void init() {
 
@@ -30,6 +29,14 @@ public class MainTeleOp extends CustomOpMode {
         // for testing hardware mapping
         if (gamepad1.a) {
             motorScale = motorScale == .5 ? 1 : .5;
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        if (gamepad1.back) {
+            buttonEnabled = !buttonEnabled;
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -58,17 +65,17 @@ public class MainTeleOp extends CustomOpMode {
             motorLiftL.setPower(gamepad2.right_stick_y);
             motorLiftR.setPower(gamepad2.right_stick_y);
 
-        } else if (gamepad2.right_stick_y > 0.1 /*&& button.getVoltage() < 2*/) {
+        } else if (gamepad2.right_stick_y > 0.1 /*&& !isButtonPressed()*/) {
             motorLiftL.setPower(gamepad2.right_stick_y / 2);
             motorLiftR.setPower(gamepad2.right_stick_y / 2);
 
-        } /*else if (button.getVoltage() > 2) {
+        } /*else if (isButtonPressed()) {
             motorLiftL.setPower(-1);
             motorLiftR.setPower(-1);
-        } else {
+        } */else {
             motorLiftL.setPower(0);
             motorLiftR.setPower(0);
-        } */
+        }
 
         double yL = -gamepad1.left_stick_y;
         double yR = -gamepad1.right_stick_y;
@@ -102,14 +109,19 @@ public class MainTeleOp extends CustomOpMode {
             motorBR.setPower(-lt * motorScale);
             motorFR.setPower(lt * motorScale);
         } else if (gamepad1.x) {
-            double kP_FB = 5.0 / 90.0;
-            double kP_LR = 5.0 / 90.0;
+            //kP constants for the forwards/backwards and left/right directions
+            double kP_FB = .0556;
+            double kP_LR = .0234;
+
+            //retrieve error for pitch and roll
             double diffPitch = imu.getPitch() - 3.3;
             double diffRoll = imu.getRoll() - 0.4;
 
+            //calculate action applied
             double PIDchangeFB = -kP_FB * diffRoll;
             double PIDchangeLR = -kP_LR * diffPitch;
 
+            //scales applied power down if greater than 1
             double max = Math.max(Math.abs(PIDchangeFB + PIDchangeLR), Math.abs(PIDchangeFB - PIDchangeLR));
             max = max > 1 ? max : 1;
             motorFL.setPower((PIDchangeFB + PIDchangeLR) / max);
@@ -171,8 +183,12 @@ public class MainTeleOp extends CustomOpMode {
 
         if (gamepad1.dpad_down) {
             servoRelicRot.setPosition(rotClosePos);
+            //servoRelicRot.setPosition(Range.clip(servoRelicRot.getPosition() + .025, 0, 1));
         } else if (gamepad1.dpad_up) {
             servoRelicRot.setPosition(rotOpenPos);
+            //servoRelicRot.setPosition(Range.clip(servoRelicRot.getPosition() - .025, 0, 1));
+        } else if (gamepad1.dpad_left) {
+            servoRelicRot.setPosition(.2);
         }
 
         if (gamepad1.left_bumper) {
@@ -239,9 +255,11 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("MotorFREncoder", motorFR.getCurrentPosition());
         //telemetry.addData("MotorBLEncoder", motorBL.getCurrentPosition());
         //telemetry.addData("MotorBREncoder", motorBR.getCurrentPosition());
-        //telemetry.addData("rangeL cm: ", getLeftDistance() + "");
-        //telemetry.addData("rangeR cm: ", getRightDistance());
+        telemetry.addData("rangeL cm: ", getLeftDistance() + "");
+        telemetry.addData("rangeR cm: ", getRightDistance());
+        telemetry.addData("button enabled? ", buttonEnabled);
         telemetry.addData("button", button.getVoltage());
+        telemetry.addData("isPressed?", isButtonPressed());
         telemetry.addData("motorScale: ", motorScale);
         telemetry.addData("LiftL: ", motorLiftL.getCurrentPosition());
         telemetry.addData("LiftR: ", motorLiftR.getCurrentPosition());

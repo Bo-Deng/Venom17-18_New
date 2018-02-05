@@ -45,6 +45,7 @@ MERGED from [:Hardware-release:] /Users/bodeng/.android/build-cache/b9c49500bff3
 MERGED from [:FtcCommon-release:] /Users/bodeng/.android/build-cache/157ad18ef5bfc69a420690f2b9a531484312e6e6/output/AndroidManifest.xml:8:5-10:41
 MERGED from [:Analytics-release:] /Users/bodeng/.android/build-cache/1fa9a30fae63c546462fdd0f2989552df0f601ec/output/AndroidManifest.xml:5:5-7:41
 MERGED from [:WirelessP2p-release:] /Users/bodeng/.android/build-cache/2f7958cbd41ce3c90f8095958228651d9d20ac1f/output/AndroidManifest.xml:5:5-7:41
+MERGED from [Venom17-18_New.libs:opencv:unspecified] /Users/bodeng/Documents/GitHub/Venom17-18_New/libs/opencv/build/intermediates/bundles/default/AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
 		INJECTED from /Users/bodeng/Documents/GitHub/Venom17-18_New/TeamCode/src/main/AndroidManifest.xml
 		INJECTED from /Users/bodeng/Documents/GitHub/Venom17-18_New/TeamCode/src/main/AndroidManifest.xml
