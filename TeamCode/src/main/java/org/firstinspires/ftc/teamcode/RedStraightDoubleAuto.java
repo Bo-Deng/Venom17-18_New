@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.vuforia.ar.pl.DebugLog;
 
 /**
- * Created by Ryan Branstetter on 10/4/17.
+ * Created by Hamza Ali on 2/5/2018.
  */
 
-@Autonomous(name = "RedSideDoubleAuto", group = "autonomous")
-public class RedSideDoubleAuto extends CustomLinearOpMode {
+public class RedStraightDoubleAuto extends CustomLinearOpMode {
     public void runOpMode() throws InterruptedException {
         initStuff(hardwareMap);
 
         AutoColor = "RED";
         waitForStart();
+
         getJewelColor();
         getVuMark();
 
@@ -23,68 +22,67 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         grabBlock();
         Thread.sleep(200);
 
-        moveSquares(.65, .20);
+        moveSquares(.35, .20);
         stopMotors();
         Thread.sleep(500);
 
-
-        Pturn(90);
-        stopMotors();
-        Thread.sleep(500);
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
-        boolean side = true;
         if (template == 'L') {
             //strafe left
-            strafeRedAssistedPID(53.4, 90);
-            DebugLog.LOGE("Template: ", "L");
+            strafeRedAssistedPID(80.4, 0);
 
         } else if (template == 'C') {
             // align with center column
-            strafeRedAssistedPID( 36.7, 90);
-            DebugLog.LOGE("Template: ", "C");
+            strafeRedAssistedPID(62.9, 0);
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssistedPID(20.7, 90);
-            DebugLog.LOGE("Template: ", "R");
+            strafeRedAssistedPID(46, 0);
         } stopMotors();
 
         liftDown();
-        Thread.sleep(200);
+        Thread.sleep(500);
 
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
 
-        wiggle(.4, 90);
+        wiggle(.4, 0);
         stopMotors();
-        sleep(200);
+        sleep(250);
         backUp();
-        sleep(200);
+
+        //second block
         Pturn(-90);
-        moveSquares(1.5, 1);
+        Pturn(-45);
+        Thread.sleep(250);
+
+        moveSquares(1.45,1);
+        Thread.sleep(250);
+
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(0);
-        moveSquares(2.75, 1);
+        Pturn(90);
+        Pturn(90);
 
-        DebugLog.LOGE("startDistance ", "" + getRightDistance());
+        moveSquares(1.45, 1);
+        Thread.sleep(250);
 
-        side = true;
+        Pturn(-45);
+        stopMotors();
+        Thread.sleep(500);
+
         if (template == 'L') {
             //strafe left
-            strafeRedAssistedPID(53.4, 90);
-            DebugLog.LOGE("Template: ", "L");
+            strafeRedAssistedPID(80.4, 0);
 
         } else if (template == 'C') {
             // align with center column
-            strafeRedAssistedPID( 36.7, 90);
-            DebugLog.LOGE("Template: ", "C");
+            strafeRedAssistedPID(62.9, 0);
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssistedPID(20.7, 90);
-            DebugLog.LOGE("Template: ", "R");
+            strafeRedAssistedPID(46, 0);
         } stopMotors();
 
         liftDown();
@@ -93,7 +91,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
 
-        wiggle(.4, 90);
+        wiggle(.4, 0);
         stopMotors();
         sleep(250);
         backUp();

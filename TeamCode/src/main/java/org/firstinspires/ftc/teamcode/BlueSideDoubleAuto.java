@@ -34,7 +34,6 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
-        template = 'L';
         if (template == 'L') {
             //strafe left
             strafeBlueAssistedPID(22, 90);
@@ -68,13 +67,12 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         moveSquares(.6, .6);
         stopMotors();
         Thread.sleep(200);
-        grabBlock();
+        grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
         Pturn(90);
         Thread.sleep(500);
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
-        template = 'L';
         if (template == 'L') {
             //strafe left
             strafeBlueAssistedPID(22, 90);
@@ -99,12 +97,9 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
 
-        //wiggle(.4, 90);
+        wiggle(.4, 90);
         stopMotors();
         sleep(200);
         backUp();
-
-
-
     }
 }
