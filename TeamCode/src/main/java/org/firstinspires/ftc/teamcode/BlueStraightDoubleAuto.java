@@ -73,7 +73,7 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
         Pturn(-90);
         Pturn(-90);
 
-        moveSquares(1.45, 1); //test value
+        moveSquares(1.5, 1); //test value
         Thread.sleep(250);
 
         Pturn(45);
