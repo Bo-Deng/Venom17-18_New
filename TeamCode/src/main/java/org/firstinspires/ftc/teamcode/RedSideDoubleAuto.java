@@ -62,11 +62,16 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         sleep(200);
         backUp();
         sleep(200);
+
+        //second block, please test this
+        Pturn(-90);
         Pturn(-90);
         moveSquares(1.5, 1);
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(0);
-        moveSquares(2.75, 1);
+        Pturn(90);
+        Pturn(90);
+
+        moveSquares(1.6, 1);
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 

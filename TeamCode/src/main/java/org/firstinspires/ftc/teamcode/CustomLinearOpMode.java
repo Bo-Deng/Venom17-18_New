@@ -718,7 +718,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         //lift block off ground?
         times.reset();
-        while (times.milliseconds() < 500 && opModeIsActive()) {
+        while (motorLiftR.getCurrentPosition() < 750 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
             motorLiftL.setPower(1);
             motorLiftR.setPower(-1);
         }

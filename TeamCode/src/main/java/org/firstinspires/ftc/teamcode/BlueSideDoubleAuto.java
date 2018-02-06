@@ -63,11 +63,15 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         sleep(200);
         backUp();
         moveSquares(-.2, .4);
+
+        //second block, test please
         Pturn(-90);
-        moveSquares(.6, .6);
+        Pturn(-90);
+        moveSquares(1.5, 1);
         stopMotors();
         Thread.sleep(200);
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
+        Pturn(90);
         Pturn(90);
         Thread.sleep(500);
 

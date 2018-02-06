@@ -61,19 +61,19 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
         sleep(250);
         backUp();
 
-        //second block
+        //second block; path to get to the ball will most probably have to be adjusted.
         Pturn(90);
         Pturn(45);
         Thread.sleep(250);
 
-        moveSquares(1.45,1);
+        moveSquares(1.45,1); //test value
         Thread.sleep(250);
 
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
         Pturn(-90);
         Pturn(-90);
 
-        moveSquares(1.45, 1);
+        moveSquares(1.45, 1); //test value
         Thread.sleep(250);
 
         Pturn(45);
