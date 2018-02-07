@@ -674,37 +674,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoUpDownArm.setPosition(.55);
     }
     public void grabBlock() throws InterruptedException{
-        // direction is either 1 or -1, -1 on red 1 on blue
-        /*servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
-        //moveSquares(-.009, .25);
-        startMotors(-.25);
-        Thread.sleep(80);
-        stopMotors();
-        Thread.sleep(200);
-
-        motorYLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorXLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        while (motorYLift.getCurrentPosition() > -300 && opModeIsActive()) {
-            motorYLift.setPower(-.8);
-        }
-        motorYLift.setPower(0);
-        Thread.sleep(201);
-
-        times.reset();
-        while (times.milliseconds() < 140 && opModeIsActive()) {
-            motorXLift.setPower(-.75);
-        }
-        motorXLift.setPower(0);
-        Thread.sleep(100);
-
-        while (motorYLift.getCurrentPosition() < 300 && opModeIsActive()) {
-            motorYLift.setPower(.8);
-        }
-        motorYLift.setPower(0);
-        Thread.sleep(200);*/
-
         servoLHug.setPosition(leftClampPos);
         servoRHug.setPosition(rightClampPos);
         Thread.sleep(400);
@@ -716,7 +685,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         motorXLift.setPower(0);
         sleep(100); */
 
-        //lift block off ground?
+        //lift block off ground
         times.reset();
         while (motorLiftR.getCurrentPosition() < 750 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
             motorLiftL.setPower(1);
@@ -728,7 +697,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void liftDown() {
-        while (motorLiftR.getCurrentPosition() < -700 && opModeIsActive()) {
+        while (motorLiftR.getCurrentPosition() < -750 && opModeIsActive()) { //match value with value of grab block method
             motorLiftL.setPower(-1);
             motorLiftR.setPower(1);
         }

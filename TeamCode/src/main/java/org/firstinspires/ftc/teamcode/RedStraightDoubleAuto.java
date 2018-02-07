@@ -24,7 +24,7 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
 
         moveSquares(.35, .20);
         stopMotors();
-        Thread.sleep(500);
+        Thread.sleep(250);
 
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
@@ -43,7 +43,7 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         } stopMotors();
 
         liftDown();
-        Thread.sleep(500);
+        Thread.sleep(250);
 
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
@@ -55,22 +55,34 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
 
         //second block, path to get to the ball will most probably have to be adjusted.
         Pturn(-90);
-        Pturn(-45);
+        if (template == 'L')
+            Pturn(-45);
+        else if (template == 'C')
+            Pturn(-65);
+        else if (template == 'R')
+            Pturn(-85);
+        stopMotors();
         Thread.sleep(250);
 
-        moveSquares(1.45,1); //test distance
+        moveSquares(1.15,1); //test distance
         Thread.sleep(250);
 
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(90);
-        Pturn(90);
-
-        moveSquares(1.5, 1); //test distance
         Thread.sleep(250);
 
-        Pturn(-45);
+        moveSquares(-1.1, 1); //test distance
+        Thread.sleep(250);
+
+        Pturn(90);
+        if (template == 'L')
+            Pturn(45);
+        else if (template == 'C')
+            Pturn(65);
+        else if (template == 'R')
+            Pturn(85);
         stopMotors();
-        Thread.sleep(500);
+
+        Thread.sleep(250);
 
         if (template == 'L') {
             //strafe left
@@ -85,15 +97,17 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
             strafeRedAssistedPID(46, 0);
         } stopMotors();
 
-        liftDown();
         Thread.sleep(500);
-
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
 
         wiggle(.4, 0);
         stopMotors();
+        servoLHug.setPosition(leftThreadPos);
+        servoRHug.setPosition(rightThreadPos);
         sleep(250);
+
         backUp();
+        liftDown();
+        servoLHug.setPosition(.4);
+        servoRHug.setPosition(.6);
     }
 }

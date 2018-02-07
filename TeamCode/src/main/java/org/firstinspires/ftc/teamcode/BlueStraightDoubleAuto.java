@@ -63,22 +63,34 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
 
         //second block; path to get to the ball will most probably have to be adjusted.
         Pturn(90);
-        Pturn(45);
+        if (template == 'L')
+            Pturn(45);
+        else if (template == 'C')
+            Pturn(65);
+        else if (template == 'R')
+            Pturn(85);
+        stopMotors();
         Thread.sleep(250);
 
-        moveSquares(1.45,1); //test value
+        moveSquares(1.15,1); //test distance
         Thread.sleep(250);
 
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(-90);
-        Pturn(-90);
-
-        moveSquares(1.5, 1); //test value
         Thread.sleep(250);
 
-        Pturn(45);
+        moveSquares(-1.1, 1); //test distance
+        Thread.sleep(250);
+
+        Pturn(-90);
+        if (template == 'L')
+            Pturn(-45);
+        else if (template == 'C')
+            Pturn(-65);
+        else if (template == 'R')
+            Pturn(-85);
         stopMotors();
-        Thread.sleep(500);
+
+        Thread.sleep(250);
 
         if (template == 'L') {
             //strafe left
@@ -90,19 +102,20 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            //strafeBlueAssisted(.5, 77, 180);
             strafeBlueAssistedPID(81.7, 180);
         } stopMotors();
 
-        liftDown();
         Thread.sleep(500);
 
+        wiggle(.4, 0);
+        stopMotors();
+        servoLHug.setPosition(leftThreadPos);
+        servoRHug.setPosition(rightThreadPos);
+        sleep(250);
+
+        backUp();
+        liftDown();
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
-
-        wiggle(.4, 180);
-        stopMotors();
-        sleep(250);
-        backUp();
     }
 }
