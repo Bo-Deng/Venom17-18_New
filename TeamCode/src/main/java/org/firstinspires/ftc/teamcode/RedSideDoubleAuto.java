@@ -92,15 +92,22 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
             DebugLog.LOGE("Template: ", "R");
         } stopMotors();
 
-        liftDown();
-        Thread.sleep(500);
+        DebugLog.LOGE("End Distance: ", "" + getLeftDistance());
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        Thread.sleep(200);
 
         wiggle(.4, 90);
         stopMotors();
-        sleep(250);
+
+        servoLHug.setPosition(leftThreadPos);
+        servoRHug.setPosition(rightThreadPos);
+
+        sleep(200);
         backUp();
+        stopMotors();
+
+        liftDown();
+        servoLHug.setPosition(.4);
+        servoRHug.setPosition(.6);
     }
 }

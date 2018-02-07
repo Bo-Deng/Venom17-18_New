@@ -97,15 +97,20 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("End Distance: ", "" + getLeftDistance());
 
-        liftDown();
         Thread.sleep(200);
-
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
 
         wiggle(.4, 90);
         stopMotors();
+
+        servoLHug.setPosition(leftThreadPos);
+        servoRHug.setPosition(rightThreadPos);
+
         sleep(200);
         backUp();
+        stopMotors();
+
+        liftDown();
+        servoLHug.setPosition(.4);
+        servoRHug.setPosition(.6);
     }
 }
