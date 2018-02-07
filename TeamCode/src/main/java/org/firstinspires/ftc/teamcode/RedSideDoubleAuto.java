@@ -66,12 +66,19 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         //second block, please test this
         Pturn(-90);
         Pturn(-90);
+        Thread.sleep(250);
+
         moveSquares(.9, 1);
+        Thread.sleep(250);
+
         grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
+
+        Thread.sleep(250);
         Pturn(90);
         Pturn(90);
 
         moveSquares(.92, 1);
+        Thread.sleep(250);
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
@@ -94,7 +101,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("End Distance: ", "" + getLeftDistance());
 
-        Thread.sleep(200);
+        Thread.sleep(250);
 
         wiggle(.4, 90);
         stopMotors();
@@ -102,7 +109,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         servoLHug.setPosition(leftThreadPos);
         servoRHug.setPosition(rightThreadPos);
 
-        sleep(200);
+        sleep(250);
         backUp();
         stopMotors();
 
