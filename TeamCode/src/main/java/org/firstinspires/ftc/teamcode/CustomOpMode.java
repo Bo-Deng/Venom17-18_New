@@ -32,8 +32,11 @@ public class CustomOpMode extends OpMode {
     DcMotor motorBR;
     DcMotor motorBL;
 
-    Servo servoLHug;
-    Servo servoRHug;
+    Servo servoLLHug;
+    Servo servoLRHug;
+    Servo servoULHug;
+    Servo servoURHug;
+    Servo servoFlip;
 
     Servo servoUpDownArm;
     Servo servoLeftRightArm;
@@ -104,16 +107,21 @@ public class CustomOpMode extends OpMode {
         motorBR = map.dcMotor.get("motorBR");
         motorBL = map.dcMotor.get("motorBL");
 
-        servoLHug = map.servo.get("servoLHug");
-        servoRHug = map.servo.get("servoRHug");
+        servoLLHug = map.servo.get("servoLLHug");
+        servoLRHug = map.servo.get("servoLRHug");
+        servoULHug = map.servo.get("servoULHug");
+        servoURHug = map.servo.get("servoURHug");
+        servoFlip = map.servo.get("servoFlip");
+
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
 
         motorLiftL = map.dcMotor.get("motorLiftL");
         motorLiftR = map.dcMotor.get("motorLiftR");
 
-        servoLHug.setPosition(leftInitPos);
-        servoRHug.setPosition(rightInitPos);
+        //servoLLHug.setPosition(leftInitPos);
+        //servoLRHug.setPosition(rightInitPos);
+        servoFlip.setPosition(1);
 
         servoUpDownArm.setPosition(.73);
         servoLeftRightArm.setPosition(.35);

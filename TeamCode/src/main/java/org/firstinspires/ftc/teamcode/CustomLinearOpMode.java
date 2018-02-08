@@ -41,8 +41,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     ModernRoboticsI2cRangeSensor rangeSensorR;
     //AnalogInput button;
 
-    Servo servoLHug;
-    Servo servoRHug;
+    Servo servoLLHug;
+    Servo servoLRHug;
 
     Servo servoUpDownArm;
     Servo servoLeftRightArm;;
@@ -117,16 +117,16 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         //button = hardwareMap.get(AnalogInput.class, "button");
 
 
-        servoLHug = map.servo.get("servoLHug");
-        servoRHug = map.servo.get("servoRHug");
+        servoLLHug = map.servo.get("servoLLHug");
+        servoLRHug = map.servo.get("servoLRHug");
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
         imu.IMUinit(hardwareMap);
 
-        servoLHug.setPosition(leftOpenPos);
-        servoRHug.setPosition(rightOpenPos);
+        servoLLHug.setPosition(leftOpenPos);
+        servoLRHug.setPosition(rightOpenPos);
         servoUpDownArm.setPosition(1);
         servoLeftRightArm.setPosition(.40);
 
@@ -675,8 +675,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
     public void grabBlock() throws InterruptedException{
         // direction is either 1 or -1, -1 on red 1 on blue
-        /*servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        /*servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
         //moveSquares(-.009, .25);
         startMotors(-.25);
         Thread.sleep(80);
@@ -705,8 +705,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         motorYLift.setPower(0);
         Thread.sleep(200);*/
 
-        servoLHug.setPosition(leftClampPos);
-        servoRHug.setPosition(rightClampPos);
+        servoLLHug.setPosition(leftClampPos);
+        servoLRHug.setPosition(rightClampPos);
         Thread.sleep(400);
 
         /*times.reset();

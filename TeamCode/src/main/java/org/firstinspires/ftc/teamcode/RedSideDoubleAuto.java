@@ -54,8 +54,8 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         liftDown();
         Thread.sleep(200);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 90);
         stopMotors();
@@ -90,8 +90,8 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         liftDown();
         Thread.sleep(500);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 90);
         stopMotors();
