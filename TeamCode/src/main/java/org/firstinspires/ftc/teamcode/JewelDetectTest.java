@@ -80,9 +80,10 @@ public class JewelDetectTest extends OpModeCamera {
 
             img = convertYuvImageToRgb(yuvImage, width, height, 1);
             imgMat = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
+            Utils.bitmapToMat(img, imgMat);
 
-            scan4Red();
-            //scan4Circles();
+            //scan4Red();
+            scan4Circles();
             //scan4CirclesB();
             telemetry.addData("Number of Circles", CMat.cols());
 
@@ -93,7 +94,7 @@ public class JewelDetectTest extends OpModeCamera {
                     telemetry.addData("Red Jewel on", "Left");
             }
 
-
+            /*
             scan4Circles();
             telemetry.addData("Num of Circles", CMat.cols()); //return number of circles (# of columns = # of circles)
 
@@ -116,8 +117,7 @@ public class JewelDetectTest extends OpModeCamera {
                 }
             }
             else
-                telemetry.addData("Circle not found", "Try Again");
-
+                telemetry.addData("Circle not found", "Try Again"); */
 
             if (loopCount < 10 && CMat.cols() > 0) { //saves first 10 successful images to phone gallery
                 writeToFile(imgMat, CMat);  // use this method to print circles in CMat onto the image in imgMat before saving to device
@@ -255,11 +255,10 @@ public class JewelDetectTest extends OpModeCamera {
 
     //alternate methods
 
-    private void scan4Circles() { //simplified loop (probably doesn't work)
-        Utils.bitmapToMat(img, imgMat);
+    private void scan4Circles() { //simplified loop
         Imgproc.cvtColor(imgMat, imgMat, Imgproc.COLOR_RGB2GRAY, 0);
         CMat = new Mat(imgMat.size(), CvType.CV_8UC1);
-        Imgproc.HoughCircles(imgMat, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, imgMat.rows()/8, 100, 35, 75, 125);
+        Imgproc.HoughCircles(imgMat, CMat, Imgproc.CV_HOUGH_GRADIENT, dp, imgMat.rows()/8, 100, 25, 25, 125);
         telemetry.addData("Circle Scan","Successful");
     }
 
