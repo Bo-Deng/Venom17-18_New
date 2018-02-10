@@ -81,7 +81,21 @@ public class CustomOpMode extends OpMode {
     double rotOpenPos = .8175;
     double rotClosePos = .032;
 
+    double LLOpen = .54;
+    double LLClose = .95;
+    double LLThread = .85;
 
+    double ULOpen = 1.0;
+    double ULClose = .5;
+    double ULThread = .6;
+
+    double LROpen = .6;
+    double LRClose = .15;
+    double LRThread = .25;
+
+    double UROpen = 0.0;
+    double URClose = .4;
+    double URThread = .3;
 
 
 
@@ -107,10 +121,10 @@ public class CustomOpMode extends OpMode {
         motorBR = map.dcMotor.get("motorBR");
         motorBL = map.dcMotor.get("motorBL");
 
-        servoLLHug = map.servo.get("servoLLHug");
-        servoLRHug = map.servo.get("servoLRHug");
-        servoULHug = map.servo.get("servoULHug");
-        servoURHug = map.servo.get("servoURHug");
+        servoLLHug = map.servo.get("servoLRHug");
+        servoLRHug = map.servo.get("servoLLHug");
+        servoULHug = map.servo.get("servoURHug");
+        servoURHug = map.servo.get("servoULHug");
         servoFlip = map.servo.get("servoFlip");
 
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
@@ -121,7 +135,17 @@ public class CustomOpMode extends OpMode {
 
         //servoLLHug.setPosition(leftInitPos);
         //servoLRHug.setPosition(rightInitPos);
-        servoFlip.setPosition(1);
+        servoLLHug.setPosition(LLOpen);
+        servoLRHug.setPosition(LROpen);
+        servoULHug.setPosition(ULOpen);
+        servoURHug.setPosition(UROpen);
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+        }
+
+        servoFlip.setPosition(.025);
 
         servoUpDownArm.setPosition(.73);
         servoLeftRightArm.setPosition(.35);

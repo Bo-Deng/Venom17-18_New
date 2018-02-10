@@ -198,75 +198,95 @@ public class MainTeleOp extends CustomOpMode {
             servoRelicGrab.setPosition(grabClosePos);
         }
 
-        if (gamepad2.x) { //left thread, right fully open
+        if (gamepad2.x) { //all close
             //servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() - .025, 0, 1)); //.775
-            servoLLHug.setPosition(leftThreadPos);
-            servoLRHug.setPosition(rightOpenPos);
+            servoLLHug.setPosition(LLClose);
+            servoLRHug.setPosition(LRClose);
+            servoULHug.setPosition(ULClose);
+            servoURHug.setPosition(URClose);
         }
-        if (gamepad2.b) { //right thread, left fully open
+        if (gamepad2.b) { //all open
             //servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() + .025, 0, 1)); //1
-            servoLLHug.setPosition(leftOpenPos);
-            servoLRHug.setPosition(rightThreadPos);
+            servoLLHug.setPosition(LLOpen);
+            servoLRHug.setPosition(LROpen);
+            servoULHug.setPosition(ULOpen);
+            servoURHug.setPosition(UROpen);
         }
 
-        if (gamepad2.y) { //both thread
+        if (gamepad2.y) { //all thread
             //servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() - .025, 0, 1)); //.775
-            servoLLHug.setPosition(leftThreadPos);
-            servoLRHug.setPosition(rightThreadPos);
+            servoLLHug.setPosition(LLThread);
+            servoLRHug.setPosition(LRThread);
+            servoULHug.setPosition(ULThread);
+            servoURHug.setPosition(URThread);
         }
 
-        if (servoLLHug.getPosition() > .62) {
-            servoLLHug.setPosition(leftOpenPos);
+        /*if (servoLLHug.getPosition() > .62) {
+            servoLLHug.setPosition(LLOpen);
         }
 
         if (servoLRHug.getPosition() < .48) {
-            servoLRHug.setPosition(rightOpenPos);
+            servoLRHug.setPosition(LROpen);
+        }*/
+
+        if (gamepad2.dpad_right) { // bottom thread
+            if (!isFlipped) {
+                servoLLHug.setPosition(LLThread);
+                servoLRHug.setPosition(LRThread);
+            }
+            else {
+                servoURHug.setPosition(URThread);
+                servoULHug.setPosition(ULThread);
+            }
         }
-
-
+        
 
         //left hug tighten
         if (gamepad2.left_bumper) {
             if (!isFlipped) {
-                servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() - .025, 0, 1));
+                servoLRHug.setPosition(LRClose);
             }
             else {
-                servoURHug.setPosition(Range.clip(servoURHug.getPosition() + .025, 0, 1));
+                servoULHug.setPosition(ULClose);
             }
         }
 
         //left hug fully open
         else if (gamepad2.left_trigger > .1) {
             if (!isFlipped) {
-                servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() + .025, 0, 1));
+                servoLRHug.setPosition(LROpen);
             }
             else {
-                servoURHug.setPosition(Range.clip(servoURHug.getPosition() - .025, 0, 1));
+                servoULHug.setPosition(ULOpen);
             }
         }
 
         //right hug tighten
         if (gamepad2.right_bumper) {
             if (!isFlipped) {
-                servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() - .025, 0, 1));
+                servoLLHug.setPosition(LLClose);
             }
             else {
-                servoULHug.setPosition(Range.clip(servoULHug.getPosition() + .025, 0, 1));
+                servoURHug.setPosition(URClose);
             }
         }
 
         //right hug fully open
         else if (gamepad2.right_trigger > .1) {
             if (!isFlipped) {
-                servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() + .025, 0, 1));
+                servoLLHug.setPosition(LLOpen);
             }
             else {
-                servoULHug.setPosition(Range.clip(servoULHug.getPosition() - .025, 0, 1));
+                servoURHug.setPosition(UROpen);
             }
         }
 
         if (gamepad2.a) {
-            servoFlip.setPosition((Math.abs(servoFlip.getPosition() - 1) < 0.1) ? 0 : 1);
+            if (isFlipped) {
+                servoFlip.setPosition(.025);}
+            else {
+                servoFlip.setPosition(.780);}
+
             isFlipped = !isFlipped;
             try {
                 Thread.sleep(250);
