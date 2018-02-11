@@ -239,7 +239,7 @@ public class MainTeleOp extends CustomOpMode {
                 servoULHug.setPosition(ULThread);
             }
         }
-        
+
 
         //left hug tighten
         if (gamepad2.left_bumper) {

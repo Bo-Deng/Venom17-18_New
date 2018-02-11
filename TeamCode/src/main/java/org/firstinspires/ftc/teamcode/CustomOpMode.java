@@ -66,7 +66,7 @@ public class CustomOpMode extends OpMode {
     boolean buttonEnabled = true;
 
     //left hug variables
-    double leftInitPos = .649;
+    /*double leftInitPos = .649;
     double leftOpenPos = .55;
     double leftThreadPos = .32;
     double leftClampPos = .18;
@@ -74,7 +74,7 @@ public class CustomOpMode extends OpMode {
     double rightInitPos = .43;
     double rightOpenPos = .49;
     double rightThreadPos = .8;
-    double rightClampPos = 1.0;
+    double rightClampPos = 1.0;*/
 
     double grabOpenPos = .925;
     double grabClosePos = .025;
@@ -89,11 +89,11 @@ public class CustomOpMode extends OpMode {
     double ULClose = .5;
     double ULThread = .6;
 
-    double LROpen = .6;
+    double LROpen = .595;
     double LRClose = .15;
     double LRThread = .25;
 
-    double UROpen = 0.0;
+    double UROpen = 0.005;
     double URClose = .4;
     double URThread = .3;
 
