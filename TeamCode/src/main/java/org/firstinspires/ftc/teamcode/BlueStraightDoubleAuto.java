@@ -55,8 +55,8 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
         liftDown();
         Thread.sleep(500);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 180);
         stopMotors();
@@ -109,15 +109,32 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
 
         Thread.sleep(500);
 
+<<<<<<< HEAD
         wiggle(.4, 0);
         stopMotors();
         servoLHug.setPosition(leftThreadPos);
         servoRHug.setPosition(rightThreadPos);
+=======
+
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
+
+        wiggle(.4, 180);
+
+        stopMotors();
+        servoLLHug.setPosition(LLThread);
+        servoLRHug.setPosition(LRThread);
+>>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
         sleep(250);
 
         backUp();
         liftDown();
+<<<<<<< HEAD
         servoLHug.setPosition(.4);
         servoRHug.setPosition(.6);
+=======
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
+>>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
     }
 }

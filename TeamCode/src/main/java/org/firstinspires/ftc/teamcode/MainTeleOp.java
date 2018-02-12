@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 public class MainTeleOp extends CustomOpMode {
 
     double motorScale = 1;
+    boolean isFlipped = false;
 
     public void init() {
 
@@ -132,11 +133,11 @@ public class MainTeleOp extends CustomOpMode {
             stopMotor();
 
         /*if (gamepad2.dpad_left) {
-            //servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //0
+            //servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() - .025, 0, 1)); //0
             servoLeftRightArm.setPosition(Range.clip(servoLeftRightArm.getPosition() - .025, 0, 1));
         }
         else if (gamepad2.dpad_right) {
-            //servoLHug.setPosition(Range.clip(servoLHug.getPosition() + .025, 0, 1)); //.225
+            //servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() + .025, 0, 1)); //.225
 
             servoLeftRightArm.setPosition(Range.clip(servoLeftRightArm.getPosition() + .025, 0, 1));
         }
@@ -197,57 +198,101 @@ public class MainTeleOp extends CustomOpMode {
             servoRelicGrab.setPosition(grabClosePos);
         }
 
-        if (gamepad2.x) { //left thread, right fully open
-            //servoRHug.setPosition(Range.clip(servoRHug.getPosition() - .025, 0, 1)); //.775
-            servoLHug.setPosition(leftThreadPos);
-            servoRHug.setPosition(rightOpenPos);
+        if (gamepad2.x) { //all close
+            //servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() - .025, 0, 1)); //.775
+            servoLLHug.setPosition(LLClose);
+            servoLRHug.setPosition(LRClose);
+            servoULHug.setPosition(ULClose);
+            servoURHug.setPosition(URClose);
         }
-        if (gamepad2.b) { //right thread, left fully open
-            //servoRHug.setPosition(Range.clip(servoRHug.getPosition() + .025, 0, 1)); //1
-            servoLHug.setPosition(leftOpenPos);
-            servoRHug.setPosition(rightThreadPos);
-        }
-
-        if (gamepad2.y) { //both thread
-            //servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //.775
-            servoLHug.setPosition(leftThreadPos);
-            servoRHug.setPosition(rightThreadPos);
+        if (gamepad2.b) { //all open
+            //servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() + .025, 0, 1)); //1
+            servoLLHug.setPosition(LLOpen);
+            servoLRHug.setPosition(LROpen);
+            servoULHug.setPosition(ULOpen);
+            servoURHug.setPosition(UROpen);
         }
 
-        if (servoLHug.getPosition() > .62) {
-            servoLHug.setPosition(leftOpenPos);
+        if (gamepad2.y) { //all thread
+            //servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() - .025, 0, 1)); //.775
+            servoLLHug.setPosition(LLThread);
+            servoLRHug.setPosition(LRThread);
+            servoULHug.setPosition(ULThread);
+            servoURHug.setPosition(URThread);
         }
 
-        if (servoRHug.getPosition() < .48) {
-            servoRHug.setPosition(rightOpenPos);
+        /*if (servoLLHug.getPosition() > .62) {
+            servoLLHug.setPosition(LLOpen);
         }
 
+        if (servoLRHug.getPosition() < .48) {
+            servoLRHug.setPosition(LROpen);
+        }*/
 
-        if (gamepad2.a) {
-            servoLHug.setPosition(Range.clip(servoLHug.getPosition() - .025, 0, 1)); //.775
-            servoRHug.setPosition(Range.clip(servoRHug.getPosition() + .025, 0, 1));
+        if (gamepad2.dpad_right) { // bottom thread
+            if (!isFlipped) {
+                servoLLHug.setPosition(LLThread);
+                servoLRHug.setPosition(LRThread);
+            }
+            else {
+                servoURHug.setPosition(URThread);
+                servoULHug.setPosition(ULThread);
+            }
         }
+
 
         //left hug tighten
         if (gamepad2.left_bumper) {
-            servoLHug.setPosition(leftClampPos);
+            if (!isFlipped) {
+                servoLRHug.setPosition(LRClose);
+            }
+            else {
+                servoULHug.setPosition(ULClose);
+            }
         }
 
         //left hug fully open
         else if (gamepad2.left_trigger > .1) {
-            servoLHug.setPosition(leftOpenPos);
+            if (!isFlipped) {
+                servoLRHug.setPosition(LROpen);
+            }
+            else {
+                servoULHug.setPosition(ULOpen);
+            }
         }
 
         //right hug tighten
         if (gamepad2.right_bumper) {
-            servoRHug.setPosition(rightClampPos);
+            if (!isFlipped) {
+                servoLLHug.setPosition(LLClose);
+            }
+            else {
+                servoURHug.setPosition(URClose);
+            }
         }
 
         //right hug fully open
         else if (gamepad2.right_trigger > .1) {
-            servoRHug.setPosition(rightOpenPos);
+            if (!isFlipped) {
+                servoLLHug.setPosition(LLOpen);
+            }
+            else {
+                servoURHug.setPosition(UROpen);
+            }
         }
 
+        if (gamepad2.a) {
+            if (isFlipped) {
+                servoFlip.setPosition(.025);}
+            else {
+                servoFlip.setPosition(.780);}
+
+            isFlipped = !isFlipped;
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+            }
+        }
 
 
 
@@ -255,16 +300,18 @@ public class MainTeleOp extends CustomOpMode {
         //telemetry.addData("MotorFREncoder", motorFR.getCurrentPosition());
         //telemetry.addData("MotorBLEncoder", motorBL.getCurrentPosition());
         //telemetry.addData("MotorBREncoder", motorBR.getCurrentPosition());
-        telemetry.addData("rangeL cm: ", getLeftDistance() + "");
-        telemetry.addData("rangeR cm: ", getRightDistance());
-        telemetry.addData("button enabled? ", buttonEnabled);
-        telemetry.addData("button", button.getVoltage());
-        telemetry.addData("isPressed?", isButtonPressed());
+        //telemetry.addData("rangeL cm: ", getLeftDistance() + "");
+        //telemetry.addData("rangeR cm: ", getRightDistance());
+        //telemetry.addData("button enabled? ", buttonEnabled);
+        //telemetry.addData("button", button.getVoltage());
+        //telemetry.addData("isPressed?", isButtonPressed());
         telemetry.addData("motorScale: ", motorScale);
-        telemetry.addData("LiftL: ", motorLiftL.getCurrentPosition());
-        telemetry.addData("LiftR: ", motorLiftR.getCurrentPosition());
-        telemetry.addData("servoLHug Position: ", servoLHug.getPosition());
-        telemetry.addData("servoRHug Position: ", servoRHug.getPosition());
+        //telemetry.addData("LiftL: ", motorLiftL.getCurrentPosition());
+        //telemetry.addData("LiftR: ", motorLiftR.getCurrentPosition());
+        telemetry.addData("servoLLHug Position: ", servoLLHug.getPosition());
+        telemetry.addData("servoLRHug Position: ", servoLRHug.getPosition());
+        telemetry.addData("servoULHug Position: ", servoULHug.getPosition());
+        telemetry.addData("servoURHug Position: ", servoURHug.getPosition());
         telemetry.addData("servoLeftRight Position: ", servoLeftRightArm.getPosition());
         telemetry.addData("servoUpDown Position: ", servoUpDownArm.getPosition());
         telemetry.addData("motorRelicTop", motorRelicTop.getCurrentPosition());

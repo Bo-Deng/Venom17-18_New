@@ -41,8 +41,11 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     ModernRoboticsI2cRangeSensor rangeSensorR;
     //AnalogInput button;
 
-    Servo servoLHug;
-    Servo servoRHug;
+    Servo servoLLHug;
+    Servo servoLRHug;
+    Servo servoULHug;
+    Servo servoURHug;
+    Servo servoFlip;
 
     Servo servoUpDownArm;
     Servo servoLeftRightArm;;
@@ -65,13 +68,29 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     ElapsedTime times;
 
     //left hug variables
-    double leftOpenPos = .649;
+    /*double leftOpenPos = .649;
     double leftThreadPos = .32;
     double leftClampPos = .18;
     //right hug variables
     double rightOpenPos = .43;
     double rightThreadPos = .8;
-    double rightClampPos = 1.0;
+    double rightClampPos = 1.0;*/
+
+    double LLOpen = .54;
+    double LLClose = .95;
+    double LLThread = .85;
+
+    double ULOpen = 1.0;
+    double ULClose = .5;
+    double ULThread = .6;
+
+    double LROpen = .595;
+    double LRClose = .15;
+    double LRThread = .25;
+
+    double UROpen = 0.005;
+    double URClose = .4;
+    double URThread = .3;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -117,16 +136,29 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         //button = hardwareMap.get(AnalogInput.class, "button");
 
 
-        servoLHug = map.servo.get("servoLHug");
-        servoRHug = map.servo.get("servoRHug");
+        servoLLHug = map.servo.get("servoLLHug");
+        servoLRHug = map.servo.get("servoLRHug");
+        servoULHug = map.servo.get("servoURHug");
+        servoURHug = map.servo.get("servoULHug");
+        servoFlip = map.servo.get("servoFlip");
+
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
 
         imu = new IMU(hardwareMap.get(BNO055IMU.class, "imu"));
         imu.IMUinit(hardwareMap);
 
-        servoLHug.setPosition(leftOpenPos);
-        servoRHug.setPosition(rightOpenPos);
+        servoLLHug.setPosition(LLOpen);
+        servoLRHug.setPosition(LROpen);
+        servoULHug.setPosition(ULOpen);
+        servoURHug.setPosition(UROpen);
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+        }
+
+        servoFlip.setPosition(.025);
         servoUpDownArm.setPosition(1);
         servoLeftRightArm.setPosition(.40);
 
@@ -674,8 +706,46 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoUpDownArm.setPosition(.55);
     }
     public void grabBlock() throws InterruptedException{
+<<<<<<< HEAD
         servoLHug.setPosition(leftClampPos);
         servoRHug.setPosition(rightClampPos);
+=======
+<<<<<<< HEAD
+        // direction is either 1 or -1, -1 on red 1 on blue
+        /*servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
+        //moveSquares(-.009, .25);
+        startMotors(-.25);
+        Thread.sleep(80);
+        stopMotors();
+        Thread.sleep(200);
+
+        motorYLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorXLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while (motorYLift.getCurrentPosition() > -300 && opModeIsActive()) {
+            motorYLift.setPower(-.8);
+        }
+        motorYLift.setPower(0);
+        Thread.sleep(201);
+
+        times.reset();
+        while (times.milliseconds() < 140 && opModeIsActive()) {
+            motorXLift.setPower(-.75);
+        }
+        motorXLift.setPower(0);
+        Thread.sleep(100);
+
+        while (motorYLift.getCurrentPosition() < 300 && opModeIsActive()) {
+            motorYLift.setPower(.8);
+        }
+        motorYLift.setPower(0);
+        Thread.sleep(200);*/
+
+        servoLLHug.setPosition(LLClose);
+        servoLRHug.setPosition(LRClose);
+
+>>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
         Thread.sleep(400);
 
         /*times.reset();
