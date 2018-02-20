@@ -23,9 +23,40 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         Thread.sleep(200);
 
         grabBlock();
+        flip();
         Thread.sleep(200);
 
-        moveSquares(.35, .20);
+        times.reset();
+        while (times.milliseconds() < 500) {
+            strafeLeft(.5, 0);
+        }
+        stopMotors();
+        sleep(300);
+        strafeRedAssistedPID(10, 0);
+        Pturn(-135);
+
+        liftDown();
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+
+        moveSquares(.3, .4);
+
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        sleep(500);
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        moveSquares(-.3, .3);
+        Pturn(0);
+        sleep(200);
+        moveSquares(.35, .2);
+
         stopMotors();
         Thread.sleep(250);
 
@@ -56,77 +87,7 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         sleep(250);
         backUp();
 
-        //second block, path to get to the ball will most probably have to be adjusted.
-        Pturn(-90);
-        if (template == 'L')
-            Pturn(-45);
-        else if (template == 'C')
-            Pturn(-65);
-        else if (template == 'R')
-            Pturn(-85);
-        stopMotors();
-        Thread.sleep(250);
 
-        moveSquares(1.15,1); //test distance
-        Thread.sleep(250);
 
-        grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Thread.sleep(250);
-
-        moveSquares(-1.1, 1); //test distance
-        Thread.sleep(250);
-
-        Pturn(90);
-        if (template == 'L')
-            Pturn(45);
-        else if (template == 'C')
-            Pturn(65);
-        else if (template == 'R')
-            Pturn(85);
-        stopMotors();
-
-        Thread.sleep(250);
-
-        if (template == 'L') {
-            //strafe left
-            strafeRedAssistedPID(80.4, 0);
-
-        } else if (template == 'C') {
-            // align with center column
-            strafeRedAssistedPID(62.9, 0);
-
-        } else if (template == 'R') {
-            //strafe right
-            strafeRedAssistedPID(46, 0);
-        } stopMotors();
-
-        Thread.sleep(500);
-
-<<<<<<< HEAD
-        wiggle(.4, 0);
-        stopMotors();
-        servoLHug.setPosition(leftThreadPos);
-        servoRHug.setPosition(rightThreadPos);
-=======
-
-        servoLLHug.setPosition(.4);
-        servoLRHug.setPosition(.6);
-
-        wiggle(.4, 0);
-        stopMotors();
-        servoLLHug.setPosition(LLThread);
-        servoLRHug.setPosition(LRThread);
->>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
-        sleep(250);
-
-        backUp();
-        liftDown();
-<<<<<<< HEAD
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
-=======
-        servoLLHug.setPosition(.4);
-        servoLRHug.setPosition(.6);
->>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
     }
 }

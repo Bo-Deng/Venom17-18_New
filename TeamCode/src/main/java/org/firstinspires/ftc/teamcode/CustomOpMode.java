@@ -121,6 +121,7 @@ public class CustomOpMode extends OpMode {
         motorBR = map.dcMotor.get("motorBR");
         motorBL = map.dcMotor.get("motorBL");
 
+        //This is right i promise don't worry about it
         servoLLHug = map.servo.get("servoLRHug");
         servoLRHug = map.servo.get("servoLLHug");
         servoULHug = map.servo.get("servoURHug");

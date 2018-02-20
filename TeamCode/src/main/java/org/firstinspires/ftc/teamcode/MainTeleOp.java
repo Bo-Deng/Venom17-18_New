@@ -111,8 +111,8 @@ public class MainTeleOp extends CustomOpMode {
             motorFR.setPower(lt * motorScale);
         } else if (gamepad1.x) {
             //kP constants for the forwards/backwards and left/right directions
-            double kP_FB = .0556;
-            double kP_LR = .0234;
+            double kP_FB = .0476;
+            double kP_LR = .0734;
 
             //retrieve error for pitch and roll
             double diffPitch = imu.getPitch() - 3.3;
@@ -205,19 +205,30 @@ public class MainTeleOp extends CustomOpMode {
             servoULHug.setPosition(ULClose);
             servoURHug.setPosition(URClose);
         }
-        if (gamepad2.b) { //all open
+        else if (gamepad2.b) { //all open
             //servoLRHug.setPosition(Range.clip(servoLRHug.getPosition() + .025, 0, 1)); //1
             servoLLHug.setPosition(LLOpen);
             servoLRHug.setPosition(LROpen);
             servoULHug.setPosition(ULOpen);
             servoURHug.setPosition(UROpen);
         }
-
-        if (gamepad2.y) { //all thread
+        else if (gamepad2.y) { //all thread
             //servoLLHug.setPosition(Range.clip(servoLLHug.getPosition() - .025, 0, 1)); //.775
             servoLLHug.setPosition(LLThread);
             servoLRHug.setPosition(LRThread);
             servoULHug.setPosition(ULThread);
+            servoURHug.setPosition(URThread);
+        }
+        else if (gamepad2.left_stick_button) {
+            servoLLHug.setPosition(LLThread);
+            servoLRHug.setPosition(LROpen);
+            servoULHug.setPosition(ULThread);
+            servoURHug.setPosition(UROpen);
+        }
+        else if (gamepad2.right_stick_button) {
+            servoLLHug.setPosition(LLOpen);
+            servoLRHug.setPosition(LRThread);
+            servoULHug.setPosition(ULOpen);
             servoURHug.setPosition(URThread);
         }
 

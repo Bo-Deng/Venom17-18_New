@@ -47,7 +47,7 @@ public class RedSideAuto extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssistedPID(20.7, 90);
+            strafeRedAssistedPID(21.7, 90);
             DebugLog.LOGE("Template: ", "R");
         } stopMotors();
 

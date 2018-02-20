@@ -135,9 +135,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
         //button = hardwareMap.get(AnalogInput.class, "button");
 
-
-        servoLLHug = map.servo.get("servoLLHug");
-        servoLRHug = map.servo.get("servoLRHug");
+        //This is right i promise don't worry about it
+        servoLLHug = map.servo.get("servoLRHug");
+        servoLRHug = map.servo.get("servoLLHug");
         servoULHug = map.servo.get("servoURHug");
         servoURHug = map.servo.get("servoULHug");
         servoFlip = map.servo.get("servoFlip");
@@ -550,9 +550,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
             PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
-                PIDchange = PIDchange < .35 ? .35 : PIDchange;
+                PIDchange = PIDchange < .38 ? .38 : PIDchange;
             else if (PIDchange < 0)
-                PIDchange = PIDchange > -.35 ? -.35 : PIDchange;
+                PIDchange = PIDchange > -.38 ? -.38 : PIDchange;
             strafeRight(PIDchange, angle);
         }
         stopMotors();
@@ -636,7 +636,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
         double angleDiff = imu.getTrueDiff(angle);
         times.reset();
-        while (Math.abs(angleDiff) > 0.5 && opModeIsActive() && times.seconds() < 2) {
+        while (Math.abs(angleDiff) > 0.5 && opModeIsActive() && times.seconds() < 1.75) {
             angleDiff = imu.getTrueDiff(angle);
             PIDchange = angleDiff * kP;
 
@@ -664,7 +664,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void knockBall(String color) throws InterruptedException {
         servoUpDownArm.setPosition(.11);
-        Thread.sleep(100);
+        Thread.sleep(160);
         servoLeftRightArm.setPosition(.24);
 
         Thread.sleep(500);
@@ -706,11 +706,10 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoUpDownArm.setPosition(.55);
     }
     public void grabBlock() throws InterruptedException{
-<<<<<<< HEAD
-        servoLHug.setPosition(leftClampPos);
-        servoRHug.setPosition(rightClampPos);
-=======
-<<<<<<< HEAD
+
+        servoLLHug.setPosition(LLClose);
+        servoLRHug.setPosition(LRClose);
+
         // direction is either 1 or -1, -1 on red 1 on blue
         /*servoLLHug.setPosition(.4);
         servoLRHug.setPosition(.6);
@@ -742,11 +741,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         motorYLift.setPower(0);
         Thread.sleep(200);*/
 
-        servoLLHug.setPosition(LLClose);
-        servoLRHug.setPosition(LRClose);
 
->>>>>>> 09ebbd6be55045bdce1692388b1cac750036b0ad
-        Thread.sleep(400);
+        Thread.sleep(500);
 
         /*times.reset();
         while (times.milliseconds() < 120 && opModeIsActive()) {
@@ -757,17 +753,17 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         //lift block off ground
         times.reset();
-        while (motorLiftR.getCurrentPosition() < 750 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
             motorLiftL.setPower(1);
             motorLiftR.setPower(-1);
         }
         motorLiftL.setPower(0);
         motorLiftR.setPower(0);
-        Thread.sleep(200);
     }
 
     public void liftDown() {
-        while (motorLiftR.getCurrentPosition() < -750 && opModeIsActive()) { //match value with value of grab block method
+        times.reset();
+        while (times.milliseconds() < 120 && opModeIsActive()) { //match value with value of grab block method
             motorLiftL.setPower(-1);
             motorLiftR.setPower(1);
         }
@@ -790,6 +786,14 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMotors(-.4, -.4, -.4, -.4);
         sleep(100);
         stopMotors();
+    }
+
+    public void flip() {
+        servoFlip.setPosition(.780);
+    }
+
+    public void unflip() {
+        servoFlip.setPosition(.025);
     }
 
     /*public boolean isButtonPressed() {
