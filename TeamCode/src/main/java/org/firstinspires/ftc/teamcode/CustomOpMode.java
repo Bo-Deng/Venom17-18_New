@@ -97,6 +97,8 @@ public class CustomOpMode extends OpMode {
     double URClose = .4;
     double URThread = .3;
 
+    double c = .25;
+
 
 
     AnalogInput button;
@@ -221,26 +223,25 @@ public class CustomOpMode extends OpMode {
             return joyStickVal;
         }*/
         if (-joyStickVal >= motorBR.getPower()) {
-            return Range.clip(motorBR.getPower() + .4, -1, -joyStickVal);
+            return Range.clip(motorBR.getPower() + c, -1, -joyStickVal);
         }
         else if (-joyStickVal < motorBR.getPower()) {
-            return Range.clip(motorBR.getPower() - .4, -joyStickVal, 1);
+            return Range.clip(motorBR.getPower() - c, -joyStickVal, 1);
         }
         else return -joyStickVal;
     }
     public double leftABSMotorVal(double joyStickVal) {
         if (-joyStickVal >= motorBL.getPower()) {
-            return Range.clip(motorBL.getPower() + .4, -1, -joyStickVal);
+            return Range.clip(motorBL.getPower() + c, -1, -joyStickVal);
         }
         else if (-joyStickVal < motorBL.getPower()) {
-            return Range.clip(motorBL.getPower() - .4, -joyStickVal, 1);
+            return Range.clip(motorBL.getPower() - c, -joyStickVal, 1);
         }
         else return -joyStickVal;
     }
 
 
     public void stopMotor() {
-        double c = .4;
         if (motorBL.getPower() > 0) {
             motorBL.setPower(Range.clip(motorBL.getPower() - c, 0, 1));
         }
