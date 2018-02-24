@@ -29,6 +29,17 @@ public class PixyCamDataTest extends CustomOpMode{
 
     @Override
     public void loop(){
+        /*
+        Use this to actually do something with the data we get
+        ----------------------------------------------------------------
+        0, 1     y              sync: 0xaa55=normal object, 0xaa56=color code object
+        2, 3     y              checksum (sum of all 16-bit words 2-6, that is, bytes 4-13)
+        4, 5     y              signature number
+        6, 7     y              x center of object
+        8, 9     y              y center of object
+        10, 11   y              width of object
+        12, 13   y              height of object
+        */
         telemetry.addData("Byte 0", pixyCam.read8(0));
         telemetry.addData("Byte 1", pixyCam.read8(1));
         telemetry.addData("Byte 2", pixyCam.read8(2));
