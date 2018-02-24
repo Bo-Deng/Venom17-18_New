@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -49,6 +51,7 @@ public class CustomOpMode extends OpMode {
 
     ModernRoboticsI2cRangeSensor rangeSensorL;
     ModernRoboticsI2cRangeSensor rangeSensorR;
+    I2cDeviceSynch pixyCam;
 
     DcMotor motorLiftL;
     DcMotor motorLiftR;
@@ -163,6 +166,7 @@ public class CustomOpMode extends OpMode {
 
         rangeSensorL = map.get(ModernRoboticsI2cRangeSensor.class, "rangeL");
         rangeSensorR = map.get(ModernRoboticsI2cRangeSensor.class, "rangeR");
+        pixyCam = map.i2cDeviceSynch.get("pixyCam");
 
         motorFR.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBR.setDirection(DcMotorSimple.Direction.REVERSE);
