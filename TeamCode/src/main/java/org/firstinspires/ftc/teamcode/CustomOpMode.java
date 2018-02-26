@@ -32,8 +32,11 @@ public class CustomOpMode extends OpMode {
     DcMotor motorBR;
     DcMotor motorBL;
 
-    Servo servoLHug;
-    Servo servoRHug;
+    Servo servoLLHug;
+    Servo servoLRHug;
+    Servo servoULHug;
+    Servo servoURHug;
+    Servo servoFlip;
 
     Servo servoUpDownArm;
     Servo servoLeftRightArm;
@@ -63,7 +66,7 @@ public class CustomOpMode extends OpMode {
     boolean buttonEnabled = true;
 
     //left hug variables
-    double leftInitPos = .649;
+    /*double leftInitPos = .649;
     double leftOpenPos = .55;
     double leftThreadPos = .32;
     double leftClampPos = .18;
@@ -71,14 +74,28 @@ public class CustomOpMode extends OpMode {
     double rightInitPos = .43;
     double rightOpenPos = .49;
     double rightThreadPos = .8;
-    double rightClampPos = 1.0;
+    double rightClampPos = 1.0;*/
 
     double grabOpenPos = .925;
     double grabClosePos = .025;
     double rotOpenPos = .8175;
     double rotClosePos = .032;
 
+    double LLOpen = .54;
+    double LLClose = .95;
+    double LLThread = .85;
 
+    double ULOpen = 1.0;
+    double ULClose = .5;
+    double ULThread = .6;
+
+    double LROpen = .595;
+    double LRClose = .15;
+    double LRThread = .25;
+
+    double UROpen = 0.005;
+    double URClose = .4;
+    double URThread = .3;
 
 
 
@@ -104,16 +121,32 @@ public class CustomOpMode extends OpMode {
         motorBR = map.dcMotor.get("motorBR");
         motorBL = map.dcMotor.get("motorBL");
 
-        servoLHug = map.servo.get("servoLHug");
-        servoRHug = map.servo.get("servoRHug");
+        //This is right i promise don't worry about it
+        servoLLHug = map.servo.get("servoLRHug");
+        servoLRHug = map.servo.get("servoLLHug");
+        servoULHug = map.servo.get("servoURHug");
+        servoURHug = map.servo.get("servoULHug");
+        servoFlip = map.servo.get("servoFlip");
+
         servoLeftRightArm = map.servo.get("servoLeftRightArm");
         servoUpDownArm = map.servo.get("servoUpDownArm");
 
         motorLiftL = map.dcMotor.get("motorLiftL");
         motorLiftR = map.dcMotor.get("motorLiftR");
 
-        servoLHug.setPosition(leftInitPos);
-        servoRHug.setPosition(rightInitPos);
+        //servoLLHug.setPosition(leftInitPos);
+        //servoLRHug.setPosition(rightInitPos);
+        servoLLHug.setPosition(LLOpen);
+        servoLRHug.setPosition(LROpen);
+        servoULHug.setPosition(ULOpen);
+        servoURHug.setPosition(UROpen);
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+        }
+
+        servoFlip.setPosition(.025);
 
         servoUpDownArm.setPosition(.73);
         servoLeftRightArm.setPosition(.35);

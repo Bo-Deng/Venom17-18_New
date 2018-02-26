@@ -21,23 +21,52 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         Thread.sleep(200);
 
         grabBlock();
+
+        flip();
         Thread.sleep(200);
 
         moveSquares(.65, .20);
         stopMotors();
-        Thread.sleep(500);
+        Thread.sleep(100);
 
+        Pturn(-90);
+        liftDown();
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+        moveSquares(.44, .4);
 
-        Pturn(90);
+        //servoULHug.setPosition(ULClose);
+        //times.reset();
+        //while (times.milliseconds() < 200) {
+        //    strafeRight(1, -90);
+        //}
+        //stopMotors();
+        //servoURHug.setPosition(URClose);
+
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        sleep(500);
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        moveSquares(-.35, .4);
         stopMotors();
-        Thread.sleep(500);
+        Thread.sleep(100);
+        unflip();
+        Pturn(90);
+
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
         boolean side = true;
         if (template == 'L') {
             //strafe left
-            strafeRedAssistedPID(53.4, 90);
+            strafeRedAssistedPID(55.4, 90);
             DebugLog.LOGE("Template: ", "L");
 
         } else if (template == 'C') {
@@ -47,55 +76,21 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssistedPID(20.7, 90);
+            strafeRedAssistedPID(21.7, 90);
             DebugLog.LOGE("Template: ", "R");
         } stopMotors();
 
         liftDown();
-        Thread.sleep(200);
+        Thread.sleep(400);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
-
-        wiggle(.4, 90);
-        stopMotors();
-        sleep(200);
-        backUp();
-        sleep(200);
-        Pturn(-90);
-        moveSquares(1.5, 1);
-        grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(0);
-        moveSquares(2.75, 1);
-
-        DebugLog.LOGE("startDistance ", "" + getRightDistance());
-
-        side = true;
-        if (template == 'L') {
-            //strafe left
-            strafeRedAssistedPID(53.4, 90);
-            DebugLog.LOGE("Template: ", "L");
-
-        } else if (template == 'C') {
-            // align with center column
-            strafeRedAssistedPID( 36.7, 90);
-            DebugLog.LOGE("Template: ", "C");
-
-        } else if (template == 'R') {
-            //strafe right
-            strafeRedAssistedPID(20.7, 90);
-            DebugLog.LOGE("Template: ", "R");
-        } stopMotors();
-
-        liftDown();
-        Thread.sleep(500);
-
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition((LLClose + LLOpen) / 2);
+        servoLRHug.setPosition((LRClose + LROpen) / 2);
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
 
         wiggle(.4, 90);
         stopMotors();
-        sleep(250);
         backUp();
+
     }
 }

@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.vuforia.ar.pl.DebugLog;
 
 /**
  * Created by Hamza Ali on 2/5/2018.
  */
+
+@Autonomous(name = "RedStraightDoubleAuto", group = "autonomous")
 
 public class RedStraightDoubleAuto extends CustomLinearOpMode {
     public void runOpMode() throws InterruptedException {
@@ -20,11 +23,42 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         Thread.sleep(200);
 
         grabBlock();
+        flip();
         Thread.sleep(200);
 
-        moveSquares(.35, .20);
+        times.reset();
+        while (times.milliseconds() < 500) {
+            strafeLeft(.5, 0);
+        }
         stopMotors();
-        Thread.sleep(500);
+        sleep(300);
+        strafeRedAssistedPID(10, 0);
+        Pturn(-135);
+
+        liftDown();
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+
+        moveSquares(.3, .4);
+
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        sleep(500);
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        moveSquares(-.3, .3);
+        Pturn(0);
+        sleep(200);
+        moveSquares(.35, .2);
+
+        stopMotors();
+        Thread.sleep(250);
 
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
@@ -43,57 +77,17 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         } stopMotors();
 
         liftDown();
-        Thread.sleep(500);
+        Thread.sleep(250);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 0);
         stopMotors();
         sleep(250);
         backUp();
 
-        //second block
-        Pturn(-90);
-        Pturn(-45);
-        Thread.sleep(250);
 
-        moveSquares(1.45,1);
-        Thread.sleep(250);
 
-        grabBlock(); //we'll want to make sure this method actually lifts the block high enough to stack.
-        Pturn(90);
-        Pturn(90);
-
-        moveSquares(1.45, 1);
-        Thread.sleep(250);
-
-        Pturn(-45);
-        stopMotors();
-        Thread.sleep(500);
-
-        if (template == 'L') {
-            //strafe left
-            strafeRedAssistedPID(80.4, 0);
-
-        } else if (template == 'C') {
-            // align with center column
-            strafeRedAssistedPID(62.9, 0);
-
-        } else if (template == 'R') {
-            //strafe right
-            strafeRedAssistedPID(46, 0);
-        } stopMotors();
-
-        liftDown();
-        Thread.sleep(500);
-
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
-
-        wiggle(.4, 0);
-        stopMotors();
-        sleep(250);
-        backUp();
     }
 }

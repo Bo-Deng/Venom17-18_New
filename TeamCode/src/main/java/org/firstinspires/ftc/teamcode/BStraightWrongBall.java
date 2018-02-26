@@ -55,8 +55,8 @@ public class BStraightWrongBall extends CustomLinearOpMode {
         liftDown();
         Thread.sleep(500);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 180);
         stopMotors();

@@ -47,15 +47,15 @@ public class RedSideAuto extends CustomLinearOpMode {
 
         } else if (template == 'R') {
             //strafe right
-            strafeRedAssistedPID(20.7, 90);
+            strafeRedAssistedPID(21.7, 90);
             DebugLog.LOGE("Template: ", "R");
         } stopMotors();
 
         liftDown();
         Thread.sleep(500);
 
-        servoLHug.setPosition(.4);
-        servoRHug.setPosition(.6);
+        servoLLHug.setPosition(.4);
+        servoLRHug.setPosition(.6);
 
         wiggle(.4, 90);
         stopMotors();
