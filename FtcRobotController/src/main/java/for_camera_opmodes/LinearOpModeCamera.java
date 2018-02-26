@@ -198,7 +198,7 @@ public class LinearOpModeCamera extends LinearOpMode {
 
   // returns ROTATED image, to match preview window
   static public Bitmap convertYuvImageToRgb(YuvImage yuvImage, int width, int height, int downSample) {
-    return OpModeCamera.convertYuvImageToRgb(yuvImage, width, height, downSample);
+    return OpModeCamera.convertYuvImageToRgb(yuvImage, width, height);
   }
 
 }

@@ -21,3 +21,14 @@ android {
 dependencies {
     compile project(':libs:opencv')
 }
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+dependencies {
+    compile 'org.tensorflow:tensorflow-android:+'
+}

@@ -16,7 +16,7 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
         waitForStart();
 
         getJewelColor();
-        getVuMark();
+        //getVuMark();
 
         knockBall(AutoColor);
         Thread.sleep(200);
@@ -38,15 +38,15 @@ public class BlueStraightDoubleAuto extends CustomLinearOpMode {
 
 
 
-        if (template == 'L') {
+        if (template == 'l') {
             //strafe left
             strafeBlueAssistedPID(47.0, 180);
 
-        } else if (template == 'C') {
+        } else if (template == 'm') {
             // align with center column
             strafeBlueAssistedPID(63.7, 180);
 
-        } else if (template == 'R') {
+        } else if (template == 'r') {
             //strafe right
             //strafeBlueAssisted(.5, 77, 180);
             strafeBlueAssistedPID(81.7, 180);

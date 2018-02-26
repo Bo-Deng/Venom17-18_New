@@ -38,7 +38,7 @@ public class RedStraightAuto extends CustomLinearOpMode {
         waitForStart();
 
         getJewelColor();
-        getVuMark();
+        //getVuMark();
 
         knockBall(AutoColor);
         Thread.sleep(200);
@@ -53,15 +53,15 @@ public class RedStraightAuto extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
-        if (template == 'L') {
+        if (template == 'l') {
             //strafe left
             strafeRedAssistedPID(80.4, 0);
 
-        } else if (template == 'C') {
+        } else if (template == 'm') {
             // align with center column
             strafeRedAssistedPID(62.9, 0);
 
-        } else if (template == 'R') {
+        } else if (template == 'r') {
             //strafe right
             strafeRedAssistedPID(46, 0);
         } stopMotors();

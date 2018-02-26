@@ -58,7 +58,7 @@ public class DetectColor extends OpModeCamera {
 
       // get image, rotated so (0,0) is in the bottom left of the preview window
       Bitmap rgbImage;
-      rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+      rgbImage = convertYuvImageToRgb(yuvImage, width, height);
 
       for (int x = (int) (.8 * rgbImage.getWidth()); x < rgbImage.getWidth(); x++) {
         for (int y = 0; y < (int) (.25 * rgbImage.getHeight()); y++) {

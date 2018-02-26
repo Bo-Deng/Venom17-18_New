@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/TeamCode" />
             <option value="$PROJECT_DIR$/libs" />
             <option value="$PROJECT_DIR$/libs/opencv" />
+            <option value="$PROJECT_DIR$/libtensorflow-1.5.0" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

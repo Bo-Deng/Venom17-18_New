@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -23,7 +24,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
+import org.tensorflow.Graph;
+import org.tensorflow.Session;
+import org.tensorflow.Tensor;
+import org.tensorflow.TensorFlow;
+import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+import org.tensorflow.Operation;
+import android.content.res.AssetManager;
+import java.util.List;
+
 import java.io.IOException;
+import java.util.Vector;
 
 import for_camera_opmodes.LinearOpModeCamera;
 
@@ -31,6 +42,10 @@ import for_camera_opmodes.LinearOpModeCamera;
  * Created by Bo on 9/13/2017.
  */
 public class CustomLinearOpMode extends LinearOpModeCamera {
+    static {
+        System.loadLibrary("tensorflow_inference");
+    }
+
     DcMotor motorFR;
     DcMotor motorFL;
     DcMotor motorBR;
@@ -55,7 +70,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     String AutoColor;
     char template;
-    boolean jewelIsRed;
+    boolean rightJewelRed;
 
     double sf = 1.3;
 
@@ -92,6 +107,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     double URClose = .4;
     double URThread = .3;
 
+    TFClassifier network;
+    AssetManager assets;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -101,7 +119,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         times = new ElapsedTime();
 
-
+        assets = hardwareMap.appContext.getAssets();
+        network = network.create(assets, "rounded_graph.pb", "retrained_labels.txt", 224, 128, 128, "input", "final_result");
+        telemetry.addData("Tensorflow", "Initialized");
 
         telemetry.addLine("startJewelCamera initialization started");
         telemetry.update();
@@ -172,44 +192,34 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void getJewelColor() {
         times.reset();
-        int numPics = 0;
-        int redValue = 0;
-        int blueValue = 0;
-        int numFailLoops = 0;
+        if (imageReady()) { // only do this if an image has been returned from the camera
 
-        while (times.seconds() < 2 && opModeIsActive()) {
-            if (imageReady()) { // only do this if an image has been returned from the camera
+            // get image, rotated so (0,0) is in the bottom left of the preview window
+            Bitmap rgbImage;
+            rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
+            List<Classifier.Recognition> results = network.recognizeImage(rgbImage);
+            stopCamera();
+            //network.close();
+            telemetry.addData("Network Output: ", results.get(0).getTitle());
+            telemetry.addData("Network Certainty: ", results.get(0).getConfidence());
+            telemetry.update();
 
-                numPics++;
+            if (results.get(0).getTitle().substring(0, 2).equals("rb"))
+                rightJewelRed = true;
+            else
+                rightJewelRed = false;
 
-                // get image, rotated so (0,0) is in the bottom left of the preview window
-                Bitmap rgbImage;
-                rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
+            template = results.get(0).getTitle().substring(2).charAt(0);
 
-                for (int x = (int) (.8 * rgbImage.getWidth()); x < rgbImage.getWidth(); x++) {
-                    for (int y = 0; y < (int) (.25 * rgbImage.getHeight()); y++) {
-                        int pixel = rgbImage.getPixel(x, y);
-                        redValue += red(pixel);
-                        blueValue += blue(pixel);
-                    }
-                }
-            }
-            else {
-                numFailLoops++;
-            }
-
-            sleep(10);
+            /* possible results
+            brl
+            brm
+            brr
+            rbl
+            rbm
+            rbr
+             */
         }
-
-        jewelIsRed = redValue > blueValue;
-
-        stopCamera();
-
-        telemetry.addData("Is Jewel Red?", jewelIsRed);
-
-        telemetry.addData("numPics: ", numPics);
-        telemetry.addData("numFailLoops: ", numFailLoops);
-        telemetry.addData("red blue: ", redValue + "    " + blueValue);
     }
 
     public void getVuMark() {
@@ -357,39 +367,26 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
                     // get image, rotated so (0,0) is in the bottom left of the preview window
                     Bitmap rgbImage;
                     rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-
-                    for (int x = 0; x < rgbImage.getWidth(); x++) {
-                        for (int y = 0; y < (int) (.25 * rgbImage.getHeight()); y++) {
-                            int pixel = rgbImage.getPixel(x, y);
-                            redValue += red(pixel);
-                            blueValue += blue(pixel);
-                            greenValue += green(pixel);
+                    List<Classifier.Recognition> results = network.recognizeImage(rgbImage);
+                    Float f = -2f;
+                    String name = "";
+                    for (Classifier.Recognition r: results) {
+                        if (f.compareTo(r.getConfidence()) > 0) {
+                            f = r.getConfidence();
+                            name = r.getTitle();
                         }
                     }
-                    int color = highestColor(redValue, greenValue, blueValue);
-
-                    switch (color) {
-                        case 0:
-                            colorString = "RED";
-                            break;
-                        case 1:
-                            colorString = "GREEN";
-                            break;
-                        case 2:
-                            colorString = "BLUE";
-                    }
-
+                    colorString = name;
                 } else {
                     colorString = "NONE";
                 }
 
-                telemetry.addData("Color:", "Color detected is: " + colorString);
+                telemetry.addData("Network Output: ", colorString);
                 telemetry.update();
                 sleep(10);
             }
             stopCamera();
-
-
+            network.close();
         }
         return colorString;
     }
@@ -669,14 +666,14 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         Thread.sleep(500);
 
-        if (jewelIsRed && color.equals("RED")) {
+        if (rightJewelRed && color.equals("RED")) {
            servoLeftRightArm.setPosition(0);
-        } else if (!jewelIsRed && color.equals("RED")) {
+        } else if (!rightJewelRed && color.equals("RED")) {
            servoLeftRightArm.setPosition(.45);
         }
-        else if (jewelIsRed && color.equals("BLUE")) {
+        else if (rightJewelRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(.45);
-        } else if (!jewelIsRed && color.equals("BLUE")) {
+        } else if (!rightJewelRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(0);
         }
 
@@ -690,14 +687,14 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         Thread.sleep(1000);
 
-        if (jewelIsRed && color.equals("RED")) {
+        if (rightJewelRed && color.equals("RED")) {
             servoLeftRightArm.setPosition(.45);
-        } else if (!jewelIsRed && color.equals("RED")) {
+        } else if (!rightJewelRed && color.equals("RED")) {
             servoLeftRightArm.setPosition(0);
         }
-        if (jewelIsRed && color.equals("BLUE")) {
+        if (rightJewelRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(0);
-        } else if (!jewelIsRed && color.equals("BLUE")) {
+        } else if (!rightJewelRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(.45);
         }
 

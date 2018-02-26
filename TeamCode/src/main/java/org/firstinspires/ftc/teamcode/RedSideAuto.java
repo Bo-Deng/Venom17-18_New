@@ -15,7 +15,7 @@ public class RedSideAuto extends CustomLinearOpMode {
         AutoColor = "RED";
         waitForStart();
         getJewelColor();
-        getVuMark();
+        //getVuMark();
 
         knockBall(AutoColor);
         Thread.sleep(200);
@@ -35,17 +35,17 @@ public class RedSideAuto extends CustomLinearOpMode {
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
         boolean side = true;
-        if (template == 'L') {
+        if (template == 'l') {
             //strafe left
             strafeRedAssistedPID(53.4, 90);
             DebugLog.LOGE("Template: ", "L");
 
-        } else if (template == 'C') {
+        } else if (template == 'm') {
             // align with center column
             strafeRedAssistedPID( 36.7, 90);
             DebugLog.LOGE("Template: ", "C");
 
-        } else if (template == 'R') {
+        } else if (template == 'r') {
             //strafe right
             strafeRedAssistedPID(21.7, 90);
             DebugLog.LOGE("Template: ", "R");

@@ -16,7 +16,7 @@ public class BSideWrongBall extends CustomLinearOpMode {
         waitForStart();
 
         getJewelColor();
-        getVuMark();
+        //getVuMark();
 
         knockWrongBall(AutoColor);
         Thread.sleep(200);
@@ -34,17 +34,17 @@ public class BSideWrongBall extends CustomLinearOpMode {
 
         DebugLog.LOGE("startDistance ", "" + getLeftDistance());
 
-        if (template == 'L') {
+        if (template == 'l') {
             //strafe left
             strafeBlueAssistedPID(22, 90);
             DebugLog.LOGE("VuMark: ", "L");
 
-        } else if (template == 'C') {
+        } else if (template == 'm') {
             // align with center column
             strafeBlueAssistedPID(40, 90);
             DebugLog.LOGE("VuMark: ", "C");
 
-        } else if (template == 'R') {
+        } else if (template == 'r') {
             //strafe right
             strafeBlueAssistedPID(55, 90);
             DebugLog.LOGE("VuMark: ", "R");

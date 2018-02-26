@@ -78,7 +78,7 @@ public class JewelDetectTest extends OpModeCamera {
     public void loop() {
         if (imageReady()) { //when image received from camera
 
-            img = convertYuvImageToRgb(yuvImage, width, height, 1);
+            img = convertYuvImageToRgb(yuvImage, width, height);
             imgMat = new Mat(new Size(img.getWidth(), img.getHeight()), CvType.CV_8UC1);
             Utils.bitmapToMat(img, imgMat);
 

@@ -188,8 +188,8 @@ public class OpModeCamera extends OpMode {
   }
 
   // returns ROTATED image, to match preview window
-  static public Bitmap convertYuvImageToRgb(YuvImage yuvImage, int width, int height, int downSample) {
-    Bitmap rgbImage;
+  static public Bitmap convertYuvImageToRgb(YuvImage yuvImage, int width, int height) {
+    /*Bitmap rgbImage;
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     yuvImage.compressToJpeg(new Rect(0, 0, width, height), 0, out);
     byte[] imageBytes = out.toByteArray();
@@ -205,7 +205,15 @@ public class OpModeCamera extends OpMode {
     tmpImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length, opt);
     rgbImage=Bitmap.createBitmap(tmpImage , 0, 0, tmpImage.getWidth(), tmpImage.getHeight(), matrix, true);
 
-    return rgbImage;
+    return rgbImage;*/
+
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    yuvImage.compressToJpeg(new Rect(0, 0, width, height), 50, out);
+    byte[] imageBytes = out.toByteArray();
+    //Bitmap image =
+    return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+    //iv.setImageBitmap(image);
   }
 
 
