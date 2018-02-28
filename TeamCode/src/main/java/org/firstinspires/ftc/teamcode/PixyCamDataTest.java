@@ -17,8 +17,8 @@ public class PixyCamDataTest extends CustomOpMode{
         telemetry.addData("init ", "completed");
         telemetry.update();
 
-        //setting Pixy's I2C Address
-        pixyCam.setI2cAddress(I2cAddr.create7bit(0x54));
+        //setting Pixy's I2C Addresss
+        pixyCam.setI2cAddress(I2cAddr.create7bit(0x50));
 
         I2cDeviceSynch.ReadWindow readWindow = new I2cDeviceSynch.ReadWindow (1, 26,
                 I2cDeviceSynch.ReadMode.REPEAT);
@@ -29,6 +29,7 @@ public class PixyCamDataTest extends CustomOpMode{
 
     @Override
     public void loop(){
+        pixyCam.engage();
         /*
         Use this to actually do something with the data we get
         ----------------------------------------------------------------
