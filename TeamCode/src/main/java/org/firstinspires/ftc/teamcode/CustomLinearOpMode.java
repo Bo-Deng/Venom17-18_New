@@ -204,10 +204,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             telemetry.addData("Network Certainty: ", results.get(0).getConfidence());
             telemetry.update();
 
-            if (results.get(0).getTitle().substring(0, 2).equals("rb"))
-                rightJewelRed = true;
-            else
-                rightJewelRed = false;
+            rightJewelRed = results.get(0).getTitle().substring(0, 2).equals("rb");
 
             template = results.get(0).getTitle().substring(2).charAt(0);
 

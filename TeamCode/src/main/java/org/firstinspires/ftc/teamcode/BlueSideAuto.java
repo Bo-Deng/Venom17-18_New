@@ -16,7 +16,7 @@ public class BlueSideAuto extends CustomLinearOpMode {
         waitForStart();
 
         getJewelColor();
-        getVuMark();
+        //getVuMark();
 
         knockBall(AutoColor);
         Thread.sleep(200);
