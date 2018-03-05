@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
@@ -41,6 +42,7 @@ public class TFTest extends OpModeCamera {
     }
 
     public void loop() {
+
         if (imageReady()) { // only do this if an image has been returned from the camera
 
             // get image, rotated so (0,0) is in the bottom left of the preview window
@@ -53,5 +55,14 @@ public class TFTest extends OpModeCamera {
             telemetry.addData("Network Certainty: ", results.get(0).getConfidence());
             telemetry.update();
         }
+
+        /*testing specific images: put image in pathname (must be on RC)
+        Bitmap rgbImage = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/TFTest.jpg");
+        List<Classifier.Recognition> results = network.recognizeImage(rgbImage);
+        stopCamera();
+        //network.close();
+        telemetry.addData("Network Output: ", results.get(0).getTitle());
+        telemetry.addData("Network Certainty: ", results.get(0).getConfidence());
+        telemetry.update(); */
     }
 }
