@@ -17,10 +17,20 @@ public class MainTeleOp extends CustomOpMode {
     double motorScale = 1;
     boolean isFlipped = false;
 
+    double rollOffset;
+    double pitchOffset;
+
     public void init() {
 
         initStuff(hardwareMap);
+        try {
+            Thread.sleep(500);
+        }
+        catch (Exception e) {
 
+        }
+        rollOffset = imu.getRoll();
+        pitchOffset = imu.getPitch();
 
         telemetry.addData("init ", "completed");
         telemetry.update();
@@ -111,12 +121,15 @@ public class MainTeleOp extends CustomOpMode {
             motorFR.setPower(lt * motorScale);
         } else if (gamepad1.x) {
             //kP constants for the forwards/backwards and left/right directions
-            double kP_FB = .0476;
-            double kP_LR = .0734;
+            double kP_FB = .0496;
+            double kP_LR = .0754;
 
             //retrieve error for pitch and roll
-            double diffPitch = imu.getPitch() - 3.3;
-            double diffRoll = imu.getRoll() - 0.4;
+            double diffPitch = imu.getPitch() - pitchOffset;
+            double diffRoll = imu.getRoll() - rollOffset;
+
+            telemetry.addData("Pitch: ", diffPitch);
+            telemetry.addData("Roll: ", diffRoll);
 
             //calculate action applied
             double PIDchangeFB = -kP_FB * diffRoll;

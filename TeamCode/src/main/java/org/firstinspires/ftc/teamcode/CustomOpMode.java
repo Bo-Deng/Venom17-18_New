@@ -76,8 +76,8 @@ public class CustomOpMode extends OpMode {
     double rightThreadPos = .8;
     double rightClampPos = 1.0;*/
 
-    double grabOpenPos = .925;
-    double grabClosePos = .025;
+    double grabClosePos = .925;
+    double grabOpenPos = .225;
     double rotOpenPos = .8175;
     double rotClosePos = .032;
 

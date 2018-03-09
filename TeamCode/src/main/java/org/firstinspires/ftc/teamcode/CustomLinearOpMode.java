@@ -398,12 +398,12 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         if (squares > 0) {
-            while (Math.abs(motorBL.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
+            while (Math.abs(motorBR.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(power);
             }
         }
         else {
-            while (-Math.abs(motorBL.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
+            while (-Math.abs(motorBR.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(-power);
             }
         }
