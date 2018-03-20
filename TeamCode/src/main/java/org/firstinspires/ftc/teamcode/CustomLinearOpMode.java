@@ -63,7 +63,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public static final String TAG = "Vuforia VuMark Sample";
     OpenGLMatrix lastLocation = null;
-    VuforiaLocalizer vuforia;
+    ClosableVuforiaLocalizer vuforia;
 
     ElapsedTime times;
 
@@ -92,6 +92,12 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     double URClose = .4;
     double URThread = .3;
 
+
+    //vuforia
+    ClosableVuforiaLocalizer.Parameters parameters;
+    VuforiaTrackables relicTrackables;
+    VuforiaTrackable relicTemplate;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -102,20 +108,24 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         times = new ElapsedTime();
 
 
+       /*
+        sleep(2000);*/
 
-        telemetry.addLine("startJewelCamera initialization started");
+        //vuforia init
+        telemetry.addLine("Vuforia initializing!");
         telemetry.update();
 
-        setCameraDownsampling(2);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AXb/g5n/////AAAAGSUed2rh5Us1jESA1cUn5r5KDUqTfwO2woh7MxjiLKSUyDslqBAgwCi0Qmc6lVczErnF5TIw7vG5R4TJ2igvrDVp+dP+3i2o7UUCRRj/PtyVgb4ZfNrDzHE80/6TUHifpKu4QCM04eRWYZocWNWhuRfytVeWy6NSTWefM9xadqG8FFrFk3XnvqDvk/6ZAgerNBdq5SsJ90eDdoAhgYEee40WxasoUUM9YVMvkWOqZgHSuraV2IyIUjkW/u0O+EkFtTNRUWP+aZwn1qO1H4Lk07AJYe21eqioBLMdzY7A8YqR1TeQ//0WJg8SFdXjuGbF6uHykBe2FF5UeyaehA0iTqfPS+59FLm8y1TuUt57eImq";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        vuforia = new ClosableVuforiaLocalizer(parameters);
 
-        telemetry.addLine("Wait for camera to finish initializing!");
+        relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
+        relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
-        startCamera();  // can take a while.
-        // best started before waitForStart
-        sleep(1000);
-        telemetry.addLine("Camera ready!");
-
-
+        telemetry.addLine("Vuforia init complete");
         telemetry.update();
 
 
@@ -171,6 +181,23 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void getJewelColor() {
+
+        telemetry.addLine("startJewelCamera initialization started");
+        telemetry.update();
+
+        setCameraDownsampling(2);
+
+        telemetry.addLine("Wait for camera to finish initializing!");
+        telemetry.update();
+
+        startCamera();  // can take a while.
+        // best started before waitForStart
+        sleep(100);
+
+        telemetry.addLine("Camera ready!");
+        telemetry.update();
+
+
         times.reset();
         int numPics = 0;
         int redValue = 0;
@@ -213,20 +240,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void getVuMark() {
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = "AXb/g5n/////AAAAGSUed2rh5Us1jESA1cUn5r5KDUqTfwO2woh7MxjiLKSUyDslqBAgwCi0Qmc6lVczErnF5TIw7vG5R4TJ2igvrDVp+dP+3i2o7UUCRRj/PtyVgb4ZfNrDzHE80/6TUHifpKu4QCM04eRWYZocWNWhuRfytVeWy6NSTWefM9xadqG8FFrFk3XnvqDvk/6ZAgerNBdq5SsJ90eDdoAhgYEee40WxasoUUM9YVMvkWOqZgHSuraV2IyIUjkW/u0O+EkFtTNRUWP+aZwn1qO1H4Lk07AJYe21eqioBLMdzY7A8YqR1TeQ//0WJg8SFdXjuGbF6uHykBe2FF5UeyaehA0iTqfPS+59FLm8y1TuUt57eImq";
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
-
-        //telemetry.addData(">", "Press Play to start");
-
         relicTrackables.activate();
-
 
         // copy pasta from the ftc ppl
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -248,6 +262,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             template = 'L';
         else if (vuMark == RelicRecoveryVuMark.RIGHT)
             template = 'R';
+        vuforia.close(); //hopefully close vuforia
     }
 
 
@@ -398,13 +413,15 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         if (squares > 0) {
-            while (Math.abs(motorBR.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
+            while (Math.abs(motorBL.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(power);
             }
         }
         else {
-            while (-Math.abs(motorBR.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
+            while (-Math.abs(motorBL.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(-power);
+                //telemetry.addData("Encoder: " + -Math.abs(motorBL.getCurrentPosition()), "out of : " + squares * squaresToEncoder);
+                //telemetry.update();
             }
         }
         stopMotors();
