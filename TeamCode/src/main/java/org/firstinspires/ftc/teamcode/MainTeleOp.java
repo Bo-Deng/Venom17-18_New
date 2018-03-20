@@ -266,42 +266,51 @@ public class MainTeleOp extends CustomOpMode {
 
 
         //left hug tighten
+        /*
         if (gamepad2.left_bumper) {
             if (!isFlipped) {
                 servoLRHug.setPosition(LRClose);
+
             }
             else {
                 servoULHug.setPosition(ULClose);
             }
-        }
+        } */
 
         //left hug fully open
         else if (gamepad2.left_trigger > .1) {
             if (!isFlipped) {
                 servoLRHug.setPosition(LROpen);
+                servoLLHug.setPosition(LLOpen);
             }
             else {
                 servoULHug.setPosition(ULOpen);
+                servoURHug.setPosition(UROpen);
             }
         }
 
         //right hug tighten
+        /*
         if (gamepad2.right_bumper) {
             if (!isFlipped) {
                 servoLLHug.setPosition(LLClose);
+
             }
             else {
                 servoURHug.setPosition(URClose);
             }
-        }
+        } */
 
         //right hug fully open
         else if (gamepad2.right_trigger > .1) {
             if (!isFlipped) {
-                servoLLHug.setPosition(LLOpen);
+                servoLLHug.setPosition(LLClose);
+                servoLRHug.setPosition(LRClose);
             }
             else {
-                servoURHug.setPosition(UROpen);
+                servoURHug.setPosition(URClose);
+                servoULHug.setPosition(ULClose);
+
             }
         }
 
