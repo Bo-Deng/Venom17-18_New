@@ -97,6 +97,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     ClosableVuforiaLocalizer.Parameters parameters;
     VuforiaTrackables relicTrackables;
     VuforiaTrackable relicTemplate;
+    RelicRecoveryVuMark vuMark;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -106,10 +107,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     public void initStuff(HardwareMap map) throws InterruptedException {
 
         times = new ElapsedTime();
-
-
-       /*
-        sleep(2000);*/
 
         //vuforia init
         telemetry.addLine("Vuforia initializing!");
@@ -127,7 +124,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         telemetry.addLine("Vuforia init complete");
         telemetry.update();
-
 
 
         motorFR = map.dcMotor.get("motorFR");
@@ -172,17 +168,25 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoUpDownArm.setPosition(1);
         servoLeftRightArm.setPosition(.40);
 
-
         telemetry.addData("PID value = ", ".0275");
         telemetry.addData("init = ", "completed");
 
-
         telemetry.update();
+
+
+        //loop vuforia until end of init
+        relicTrackables.activate();
+        while (!opModeIsActive()) {
+            vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            telemetry.addData("VuMark ", vuMark);
+            sleep(100);
+        }
     }
 
     public void getJewelColor() {
 
-        telemetry.addLine("startJewelCamera initialization started");
+        //jewel camera init
+        telemetry.addLine("JewelCamera initialization started");
         telemetry.update();
 
         setCameraDownsampling(2);
@@ -191,12 +195,11 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         telemetry.update();
 
         startCamera();  // can take a while.
-        // best started before waitForStart
+
         sleep(100);
 
         telemetry.addLine("Camera ready!");
         telemetry.update();
-
 
         times.reset();
         int numPics = 0;
@@ -240,21 +243,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void getVuMark() {
-        relicTrackables.activate();
-
-        // copy pasta from the ftc ppl
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-
-
-        telemetry.addData("VuMark ", vuMark);
-        times.reset();
-
-        while (vuMark == RelicRecoveryVuMark.UNKNOWN && times.seconds() < 2 && opModeIsActive()) {
-            vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        }
-
-        template = 'R';
-
+        //vumark should be determined during loop
         telemetry.addData("VuMark ", vuMark);
         if (vuMark == RelicRecoveryVuMark.CENTER)
             template = 'C';
@@ -264,8 +253,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             template = 'R';
         vuforia.close(); //hopefully close vuforia
     }
-
-
 
     public void stopMotors() {
         motorFL.setPower(0);
