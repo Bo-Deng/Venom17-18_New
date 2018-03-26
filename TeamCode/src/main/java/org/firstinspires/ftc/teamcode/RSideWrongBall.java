@@ -14,8 +14,9 @@ public class RSideWrongBall extends CustomLinearOpMode {
 
         AutoColor = "RED";
         waitForStart();
-        getJewelColor();
+
         getVuMark();
+        getJewelColor();
 
         knockWrongBall(AutoColor);
         Thread.sleep(200);

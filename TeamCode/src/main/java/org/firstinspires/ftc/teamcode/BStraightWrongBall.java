@@ -15,8 +15,8 @@ public class BStraightWrongBall extends CustomLinearOpMode {
         AutoColor = "BLUE";
         waitForStart();
 
-        getJewelColor();
         getVuMark();
+        getJewelColor();
 
         knockWrongBall(AutoColor);
         Thread.sleep(200);

@@ -176,7 +176,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         relicTrackables.activate();
         while (!opModeIsActive()) {
             vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            telemetry.addData("VuMark ", vuMark);
         }
     }
 

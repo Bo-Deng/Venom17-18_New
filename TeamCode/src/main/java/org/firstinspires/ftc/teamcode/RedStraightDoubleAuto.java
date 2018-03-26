@@ -16,8 +16,8 @@ public class RedStraightDoubleAuto extends CustomLinearOpMode {
         AutoColor = "RED";
         waitForStart();
 
-        getJewelColor();
         getVuMark();
+        getJewelColor();
 
         knockBall(AutoColor);
         Thread.sleep(200);
