@@ -48,7 +48,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     Servo servoFlip;
 
     Servo servoUpDownArm;
-    Servo servoLeftRightArm;;
+    Servo servoLeftRightArm;
 
     DcMotor motorLiftL;
     DcMotor motorLiftR;
@@ -170,21 +170,17 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         telemetry.addData("PID value = ", ".0275");
         telemetry.addData("init = ", "completed");
-
         telemetry.update();
 
-
-        //loop vuforia until end of init
+        //loop until play button pressed
         relicTrackables.activate();
         while (!opModeIsActive()) {
             vuMark = RelicRecoveryVuMark.from(relicTemplate);
             telemetry.addData("VuMark ", vuMark);
-            sleep(100);
         }
     }
 
     public void getJewelColor() {
-
         //jewel camera init
         telemetry.addLine("JewelCamera initialization started");
         telemetry.update();
@@ -196,7 +192,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         startCamera();  // can take a while.
 
-        sleep(100);
+        sleep(50);
 
         telemetry.addLine("Camera ready!");
         telemetry.update();
@@ -223,8 +219,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
                         blueValue += blue(pixel);
                     }
                 }
-            }
-            else {
+            } else {
                 numFailLoops++;
             }
 
@@ -337,7 +332,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             telemetry.update();
 
 
-
             // LinearOpMode, so could do stuff like this too.
             /*
             motorLeft.setPower(1);  // drive forward
@@ -395,7 +389,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         }
         return colorString;
     }
-    public void moveSquares(double squares, double power) throws InterruptedException{
+
+    public void moveSquares(double squares, double power) throws InterruptedException {
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -403,8 +398,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             while (Math.abs(motorBL.getCurrentPosition()) < (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(power);
             }
-        }
-        else {
+        } else {
             while (-Math.abs(motorBL.getCurrentPosition()) > (squares * squaresToEncoder) && opModeIsActive()) {
                 startMotors(-power);
                 //telemetry.addData("Encoder: " + -Math.abs(motorBL.getCurrentPosition()), "out of : " + squares * squaresToEncoder);
@@ -487,10 +481,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
                 PIDchange = kP * diffFromDesired;
 
-                setMotors((-power - PIDchange) , (power - PIDchange) , (power + PIDchange) , (-power + PIDchange) );
+                setMotors((-power - PIDchange), (power - PIDchange), (power + PIDchange), (-power + PIDchange));
             }
-        }
-        else {
+        } else {
             while (getLeftDistance() < stopRangeCM) {
                 double diffFromDesired = imu.getTrueDiff(desiredAngle);
                 double kP = 0.02; //.025 < PID <.03
@@ -498,7 +491,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
                 PIDchange = kP * diffFromDesired;
 
-                setMotors((power - PIDchange) , (-power - PIDchange) , (-power + PIDchange) , (power + PIDchange) );
+                setMotors((power - PIDchange), (-power - PIDchange), (-power + PIDchange), (power + PIDchange));
             }
         }
     }
@@ -532,13 +525,12 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
             }
         } */
 
-        if(getRightDistance() > stopRangeCM) {
+        if (getRightDistance() > stopRangeCM) {
             while (getRightDistance() > stopRangeCM && opModeIsActive()) {
                 strafeRight(power, angle);
             }
             stopMotors();
-        }
-        else if (getRightDistance() < stopRangeCM) {
+        } else if (getRightDistance() < stopRangeCM) {
             while (getRightDistance() < stopRangeCM && opModeIsActive()) {
                 strafeLeft(power, angle);
             }
@@ -551,7 +543,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+        while (Math.abs(getRightDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
             PIDchange = Range.clip(kP * (getRightDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .38 ? .38 : PIDchange;
@@ -567,7 +559,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         double PIDchange;
 
         times.reset();
-        while(Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
+        while (Math.abs(getLeftDistance() - targetRange) > .5 && opModeIsActive() && times.seconds() < 4) {
             PIDchange = Range.clip(kP * (getLeftDistance() - targetRange), -.6, .6);
             if (PIDchange > 0)
                 PIDchange = PIDchange < .35 ? .35 : PIDchange;
@@ -582,13 +574,12 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         power = Math.abs(power);
         double desiredAngle = angle;
 
-        if(getLeftDistance() < stopRangeCM) {
+        if (getLeftDistance() < stopRangeCM) {
             while (getLeftDistance() < stopRangeCM && opModeIsActive()) {
                 strafeRight(power, angle);
             }
             stopMotors();
-        }
-        else if (getLeftDistance() > stopRangeCM) {
+        } else if (getLeftDistance() > stopRangeCM) {
             while (getLeftDistance() > stopRangeCM && opModeIsActive()) {
                 strafeLeft(power, angle);
             }
@@ -635,8 +626,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void Pturn(double angle) throws InterruptedException {
-        double kP = .6
-                /90;
+        double kP = .6 / 90;
         double PIDchange;
         double angleDiff = imu.getTrueDiff(angle);
         times.reset();
@@ -649,8 +639,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
                 motorBR.setPower(Range.clip(PIDchange - .1, -1, 1));
                 motorFL.setPower(Range.clip(-PIDchange + .1, -1, 1));
                 motorBL.setPower(Range.clip(-PIDchange + .1, -1, 1));
-            }
-            else {
+            } else {
                 motorFR.setPower(Range.clip(PIDchange + .1, -1, 1));
                 motorBR.setPower(Range.clip(PIDchange + .1, -1, 1));
                 motorFL.setPower(Range.clip(-PIDchange - .1, -1, 1));
@@ -659,6 +648,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         }
         stopMotors();
     }
+
     public double getDist(String color) {
         if (color.equals("RED")) {
             return getRightDistance();
@@ -674,11 +664,10 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         Thread.sleep(500);
 
         if (jewelIsRed && color.equals("RED")) {
-           servoLeftRightArm.setPosition(0);
+            servoLeftRightArm.setPosition(0);
         } else if (!jewelIsRed && color.equals("RED")) {
-           servoLeftRightArm.setPosition(.45);
-        }
-        else if (jewelIsRed && color.equals("BLUE")) {
+            servoLeftRightArm.setPosition(.45);
+        } else if (jewelIsRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(.45);
         } else if (!jewelIsRed && color.equals("BLUE")) {
             servoLeftRightArm.setPosition(0);
@@ -688,6 +677,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoLeftRightArm.setPosition(.3);
         servoUpDownArm.setPosition(.75);
     }
+
     public void knockWrongBall(String color) throws InterruptedException {
         servoUpDownArm.setPosition(.11);
         servoLeftRightArm.setPosition(.27);
@@ -709,7 +699,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         servoLeftRightArm.setPosition(.3);
         servoUpDownArm.setPosition(.55);
     }
-    public void grabBlock() throws InterruptedException{
+
+    public void grabBlock() throws InterruptedException {
 
         servoLLHug.setPosition(LLClose);
         servoLRHug.setPosition(LRClose);
@@ -780,8 +771,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         if (currAngle + 5 < desiredAngle) {
             setMotors(0, 0, .5, .5);
             sleep(300);
-        }
-        else if (currAngle - 5 > desiredAngle) {
+        } else if (currAngle - 5 > desiredAngle) {
 
         }
     }
@@ -803,4 +793,52 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     /*public boolean isButtonPressed() {
         return button.getVersion() == 1;
     }*/
+
+    public void SecondBlockScript() {
+        //1. drive up to pile with paddles open
+        servoURHug.setPosition(.45);
+        servoULHug.setPosition(.45);
+        servoLRHug.setPosition(.45);
+        servoLLHug.setPosition(.45);
+        sleep(100);
+
+        setMotors(.75, .75, .75, .75);
+        sleep(500);
+        stopMotors();
+
+        //1b. strafe right
+        strafeRight(.4, 90);
+        sleep(100);
+        stopMotors();
+
+        //2. open left, close right
+        servoURHug.setPosition(URClose);
+        servoULHug.setPosition(ULOpen);
+        servoLRHug.setPosition(LRClose);
+        servoLLHug.setPosition(LLOpen);
+        sleep(100);
+
+        //3. drive forward into block
+        setMotors(.25, .25, .25, .25);
+        sleep(100);
+        stopMotors();
+        sleep(100);
+
+        //4. strafe left and close left paddle 45 degrees
+        strafeLeft(.4, 90);
+        sleep(100);
+        stopMotors();
+        servoULHug.setPosition(.45);
+        servoLLHug.setPosition(.45);
+        sleep(100);
+
+        //5. strafe slowly and close left paddle slowly at same time
+        strafeRight(.4, 90);
+        while (servoLLHug.getPosition() < LLClose) {
+            servoULHug.setPosition(servoULHug.getPosition() + .5);
+            servoLLHug.setPosition(servoLLHug.getPosition() + .5);
+            sleep(50);
+        }
+        stopMotors();
+    }
 }
