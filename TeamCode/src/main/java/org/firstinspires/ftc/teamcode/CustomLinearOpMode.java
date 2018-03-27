@@ -172,10 +172,21 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         telemetry.addData("init = ", "completed");
         telemetry.update();
 
+        template = 'R';
+
         //loop until play button pressed
         relicTrackables.activate();
         while (!opModeIsActive()) {
             vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            if (vuMark == RelicRecoveryVuMark.CENTER) {
+                template = 'C';
+            }
+            if (vuMark == RelicRecoveryVuMark.LEFT) {
+                template = 'L';
+            }
+            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                template = 'R';
+            }
         }
     }
 
@@ -793,51 +804,73 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         return button.getVersion() == 1;
     }*/
 
-    public void SecondBlockScript() {
+    public void getSecondBlockRed() {
+        /*
         //1. drive up to pile with paddles open
-        servoURHug.setPosition(.45);
-        servoULHug.setPosition(.45);
-        servoLRHug.setPosition(.45);
-        servoLLHug.setPosition(.45);
-        sleep(100);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        //servoLRHug.setPosition((LRClose + LROpen) / 2);
+        //servoLLHug.setPosition((LLClose + LLOpen) / 2);
+        sleep(50);
 
         setMotors(.75, .75, .75, .75);
         sleep(500);
         stopMotors();
+        sleep(50);*/
 
         //1b. strafe right
-        strafeRight(.4, 90);
-        sleep(100);
+        strafeRight(.4, -90);
+        sleep(400);
         stopMotors();
 
-        //2. open left, close right
-        servoURHug.setPosition(URClose);
-        servoULHug.setPosition(ULOpen);
-        servoLRHug.setPosition(LRClose);
-        servoLLHug.setPosition(LLOpen);
-        sleep(100);
+        telemetry.addLine("Done strafing");
+        telemetry.update();
+        sleep(500);
+
+        //2. open left, close right (flipped)
+        servoURHug.setPosition(UROpen);
+        servoULHug.setPosition(ULClose);
+        //servoLRHug.setPosition(LRClose);
+        //servoLLHug.setPosition(LLOpen);
+        sleep(50);
+
+        telemetry.addLine("Left is open");
+        telemetry.update();
+        sleep(500);
 
         //3. drive forward into block
         setMotors(.25, .25, .25, .25);
-        sleep(100);
+        sleep(400);
         stopMotors();
-        sleep(100);
+        sleep(50);
+
+        telemetry.addLine("Done driving");
+        telemetry.update();
+        sleep(500);
 
         //4. strafe left and close left paddle 45 degrees
-        strafeLeft(.4, 90);
-        sleep(100);
+        strafeLeft(.4, -90);
+        sleep(400);
         stopMotors();
-        servoULHug.setPosition(.45);
-        servoLLHug.setPosition(.45);
-        sleep(100);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+        //servoLLHug.setPosition(.45);
+        sleep(50);
+
+        telemetry.addLine("Done strafing left and closing");
+        telemetry.update();
+        sleep(500);
 
         //5. strafe slowly and close left paddle slowly at same time
-        strafeRight(.4, 90);
-        while (servoLLHug.getPosition() < LLClose) {
-            servoULHug.setPosition(servoULHug.getPosition() + .5);
-            servoLLHug.setPosition(servoLLHug.getPosition() + .5);
+        strafeRight(.4, -90);
+        while (servoURHug.getPosition() < URClose) {
+            servoURHug.setPosition(servoURHug.getPosition() + .02);
+            //servoLLHug.setPosition(servoLLHug.getPosition() + .5);
             sleep(50);
         }
         stopMotors();
+
+        telemetry.addLine("Done strafing right and closing at same time");
+        telemetry.update();
+        sleep(500);
     }
 }

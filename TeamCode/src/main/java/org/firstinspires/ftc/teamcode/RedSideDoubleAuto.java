@@ -44,7 +44,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         //stopMotors();
         //servoURHug.setPosition(URClose);
 
-        servoULHug.setPosition(ULClose);
+        /*servoULHug.setPosition(ULClose);
         servoURHug.setPosition(URClose);
         sleep(500);
         times.reset();
@@ -55,9 +55,22 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         motorLiftL.setPower(0);
         motorLiftR.setPower(0);
 
-        moveSquares(-.35, .4);
+        */
+
+        getSecondBlockRed();
+
+        moveSquares(-.28, .4);
         stopMotors();
         Thread.sleep(100);
+
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
         unflip();
         Pturn(90);
 
@@ -93,5 +106,12 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         stopMotors();
         backUp();
 
+        //Pturn(-90);
+        //Pturn(-90);
+
+        //getSecondBlockRed();
+
+        //Pturn(90);
+        //Pturn(90);
     }
 }

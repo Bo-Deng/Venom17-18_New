@@ -92,7 +92,5 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         stopMotors();
 
         backUp();
-
-
     }
 }
