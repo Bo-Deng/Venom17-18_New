@@ -64,7 +64,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         Thread.sleep(100);
 
         times.reset();
-        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
             motorLiftL.setPower(1);
             motorLiftR.setPower(-1);
         }

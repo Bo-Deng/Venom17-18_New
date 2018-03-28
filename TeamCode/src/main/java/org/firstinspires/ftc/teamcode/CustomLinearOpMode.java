@@ -813,34 +813,34 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         //servoLLHug.setPosition((LLClose + LLOpen) / 2);
         sleep(50);
 
-        setMotors(.75, .75, .75, .75);
-        sleep(500);
+        setMotors(.5, .5, .5, .5);
+        sleep(250);
         stopMotors();
-        sleep(50);*/
+        sleep(50); */
 
         //1b. strafe right
-        strafeRight(.4, -90);
-        sleep(400);
+        strafeRight(.5, -90);
+        sleep(500);
         stopMotors();
 
         telemetry.addLine("Done strafing");
         telemetry.update();
         sleep(500);
 
-        //2. open left, close right (flipped)
+       /* //2. open left, close right (flipped)
         servoURHug.setPosition(UROpen);
         servoULHug.setPosition(ULClose);
         //servoLRHug.setPosition(LRClose);
         //servoLLHug.setPosition(LLOpen);
-        sleep(50);
+        sleep(100);
 
         telemetry.addLine("Left is open");
         telemetry.update();
-        sleep(500);
+        sleep(500);*/
 
         //3. drive forward into block
-        setMotors(.25, .25, .25, .25);
-        sleep(400);
+        setMotors(.3, .3, .3, .3);
+        sleep(500);
         stopMotors();
         sleep(50);
 
@@ -849,8 +849,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         sleep(500);
 
         //4. strafe left and close left paddle 45 degrees
-        strafeLeft(.4, -90);
-        sleep(400);
+        strafeLeft(.5, -90); //
+        sleep(500);
         stopMotors();
         servoURHug.setPosition((URClose + UROpen) / 2);
         //servoLLHug.setPosition(.45);
@@ -861,13 +861,17 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         sleep(500);
 
         //5. strafe slowly and close left paddle slowly at same time
-        strafeRight(.4, -90);
-        while (servoURHug.getPosition() < URClose) {
-            servoURHug.setPosition(servoURHug.getPosition() + .02);
+        strafeRight(.5, -90);
+        sleep(400);
+        /*while (servoURHug.getPosition() < URClose) {
+            servoURHug.setPosition(servoURHug.getPosition() + .05);
             //servoLLHug.setPosition(servoLLHug.getPosition() + .5);
             sleep(50);
-        }
+        } */
         stopMotors();
+
+        servoURHug.setPosition(URClose);
+        servoULHug.setPosition(ULClose);
 
         telemetry.addLine("Done strafing right and closing at same time");
         telemetry.update();
