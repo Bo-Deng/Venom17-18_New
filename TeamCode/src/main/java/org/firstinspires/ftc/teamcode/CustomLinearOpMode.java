@@ -804,7 +804,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         return button.getVersion() == 1;
     }*/
 
-    public void getSecondBlockRed() {
+    public void getSecondBlockRed() throws InterruptedException {
         /*
         //1. drive up to pile with paddles open
         servoURHug.setPosition((URClose + UROpen) / 2);
@@ -814,7 +814,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         sleep(50);
 
         setMotors(.5, .5, .5, .5);
-        sleep(250);
+        sleep(200);
         stopMotors();
         sleep(50); */
 
@@ -827,7 +827,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         telemetry.update();
         sleep(500);
 
-       /* //2. open left, close right (flipped)
+        //2. open left, close right (flipped)
         servoURHug.setPosition(UROpen);
         servoULHug.setPosition(ULClose);
         //servoLRHug.setPosition(LRClose);
@@ -836,7 +836,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         telemetry.addLine("Left is open");
         telemetry.update();
-        sleep(500);*/
+        sleep(500);
 
         //3. drive forward into block
         setMotors(.3, .3, .3, .3);
@@ -870,11 +870,18 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         } */
         stopMotors();
 
+        moveTime(400, .4);
+
         servoURHug.setPosition(URClose);
         servoULHug.setPosition(ULClose);
 
         telemetry.addLine("Done strafing right and closing at same time");
         telemetry.update();
         sleep(500);
+    }
+
+    public void strafeRightDiagonal() {
+        setMotors(, , , ); //figure out how to strafe diagonally
+        sleep(1000);
     }
 }

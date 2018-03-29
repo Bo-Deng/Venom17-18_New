@@ -34,7 +34,9 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         liftDown();
         servoULHug.setPosition((ULClose + ULOpen) / 2);
         servoURHug.setPosition((URClose + UROpen) / 2);
-        moveSquares(.44, .4);
+        //moveSquares(.44, .4);
+
+        strafeRightDiagonal();
 
         //servoULHug.setPosition(ULClose);
         //times.reset();
