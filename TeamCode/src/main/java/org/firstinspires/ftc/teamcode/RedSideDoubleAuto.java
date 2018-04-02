@@ -33,8 +33,8 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         Pturn(-90);
         liftDown();
         servoULHug.setPosition((ULClose + ULOpen) / 2);
-        servoURHug.setPosition((URClose + UROpen) / 2);
-        //moveSquares(.44, .4);
+        servoURHug.setPosition(URClose);
+        moveSquares(.44, .4);
 
         strafeRightDiagonal();
 
@@ -59,7 +59,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         */
 
-        getSecondBlockRed();
+        /*getSecondBlockRed();
 
         moveSquares(-.28, .4);
         stopMotors();
@@ -115,5 +115,6 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         //Pturn(90);
         //Pturn(90);
+        */
     }
 }

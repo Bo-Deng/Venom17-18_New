@@ -636,11 +636,11 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void Pturn(double angle) throws InterruptedException {
-        double kP = .6 / 90;
+        double kP = .62 / 90;
         double PIDchange;
         double angleDiff = imu.getTrueDiff(angle);
         times.reset();
-        while (Math.abs(angleDiff) > 0.5 && opModeIsActive() && times.seconds() < 1.75) {
+        while (Math.abs(angleDiff) > 0.5 && opModeIsActive() && times.seconds() < 2.5) {
             angleDiff = imu.getTrueDiff(angle);
             PIDchange = angleDiff * kP;
 
@@ -881,7 +881,8 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     }
 
     public void strafeRightDiagonal() {
-        setMotors(, , , ); //figure out how to strafe diagonally
-        sleep(1000);
+        double scale = .6;
+        setMotors(1 * scale, -.33 * scale, -.33 * scale, 1 * scale); //figure out how to strafe diagonally
+        sleep(2000);
     }
 }
