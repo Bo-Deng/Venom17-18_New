@@ -155,7 +155,7 @@ public class CustomOpMode extends OpMode {
         servoRelicRot = map.servo.get("servoRelicRot");
 
         servoRelicGrab.setPosition(grabClosePos);
-        servoRelicRot.setPosition(0);
+        servoRelicRot.setPosition(1);
 
         motorRelicTop = map.dcMotor.get("motorRelicTop");
         motorRelicBottom = map.dcMotor.get("motorRelicBottom");

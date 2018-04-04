@@ -883,11 +883,13 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     public void strafeRightDiagonal() {
         double scale = .6;
         setMotors(1 * scale, -.33 * scale, -.33 * scale, 1 * scale); //figure out how to strafe diagonally
-        sleep(2000);
+        sleep(1750);
 
-        servoULHug.setPosition(ULClose);
+        servoULHug.setPosition(ULThread);
+
+        sleep(400);
 
         setMotors(-1 * scale, .33 * scale, .33 * scale, -1 * scale); //figure out how to strafe diagonally
-        sleep(2000);
+        sleep(1000);
     }
 }
