@@ -889,7 +889,9 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         sleep(400);
 
+        servoULHug.setPosition(ULClose);
+
         setMotors(-1 * scale, .33 * scale, .33 * scale, -1 * scale); //figure out how to strafe diagonally
-        sleep(1000);
+        sleep(500);
     }
 }
