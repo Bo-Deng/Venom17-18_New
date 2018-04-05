@@ -30,6 +30,10 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         stopMotors();
         Thread.sleep(100);
 
+        moveSquares(-.15, .20);
+        stopMotors();
+        Thread.sleep(200);
+
         Pturn(-90);
         liftDown();
         servoULHug.setPosition(ULThread);
