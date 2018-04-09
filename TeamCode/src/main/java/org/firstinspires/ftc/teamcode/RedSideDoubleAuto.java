@@ -28,17 +28,20 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         moveSquares(.65, .20);
         stopMotors();
-        Thread.sleep(100);
+        Thread.sleep(400);
 
-        moveSquares(-.15, .20);
+       //back up slightly
+        moveSquares(-.10, .20);
         stopMotors();
         Thread.sleep(200);
 
+        //turn towards glyph pit
         Pturn(-90);
         liftDown();
         servoULHug.setPosition(ULThread);
         servoURHug.setPosition(UROpen);
         moveSquares(.44, .4);
+        //method grabs second block
         strafeRightDiagonal();
 
         //servoULHug.setPosition(ULClose);
@@ -65,7 +68,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         //getSecondBlockRed();
 
 
-        moveSquares(-.28, .4);
+        moveSquares(-.25, .4); //increase this maybe
         stopMotors();
         Thread.sleep(100);
 

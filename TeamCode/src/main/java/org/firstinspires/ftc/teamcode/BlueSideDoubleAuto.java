@@ -22,19 +22,30 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         Thread.sleep(200);
 
         grabBlock();
+
         flip();
         Thread.sleep(200);
 
-        moveSquares(-.85, .20);
+        moveSquares(-.65, .20);
         stopMotors();
 
         Thread.sleep(100);
 
+        //back up slightly
+        moveSquares(.10, .20);
+        stopMotors();
+        Thread.sleep(200);
+
+        //turn towards glyph pit
         Pturn(-90);
         liftDown();
-        servoULHug.setPosition((ULClose + ULOpen) / 2);
-        servoURHug.setPosition((URClose + UROpen) / 2);
+        servoULHug.setPosition(ULOpen);
+        servoURHug.setPosition(URThread);
+
         moveSquares(.44, .4);
+        //method grabs block
+        strafeLeftDiagonal();
+
         /*servoULHug.setPosition(ULClose);
         times.reset();
         while (times.milliseconds() < 200) {
@@ -42,6 +53,8 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         }
         stopMotors();
         servoURHug.setPosition(URClose);*/
+
+        /*
         servoULHug.setPosition(ULClose);
         servoURHug.setPosition(URClose);
         sleep(500);
@@ -52,11 +65,21 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         }
         motorLiftL.setPower(0);
         motorLiftR.setPower(0);
+        */
 
-        moveSquares(-.35, .4);
+        moveSquares(-.15, .4);
 
         stopMotors();
         Thread.sleep(100);
+
+        times.reset();
+        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
         unflip();
         Pturn(90);
 

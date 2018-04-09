@@ -758,7 +758,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
         //lift block off ground
         times.reset();
-        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
             motorLiftL.setPower(1);
             motorLiftR.setPower(-1);
         }
@@ -882,29 +882,73 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
 
     public void strafeRightDiagonal() {
         double scale = .75;
+        //diagonal strafe
         setMotors(1 * scale, -.33 * scale, -.33 * scale, 1 * scale); //figure out how to strafe diagonally
-        sleep(1550);
-
-        setMotors(-.25, -.25, -.25, -.25);
-        sleep(250);
+        sleep(1000);
         stopMotors();
 
+        //set both hugs to 45 degrees
         servoULHug.setPosition(ULClose + ULOpen / 2);
         servoURHug.setPosition(URClose + UROpen / 2);
         sleep(200);
 
-        setMotors(.3, .3, .3, .3);
-        sleep(400);
+        //back up and then move forward, hopefully pushing any stray blocks out of the way
+        setMotors(-.25, -.25, -.25, -.25);
+        sleep(250);
         stopMotors();
 
-        sleep(200);
+        sleep(400);
 
+        setMotors(.3, .3, .3, .3);
+        sleep(250);
+        stopMotors();
+
+        sleep(600);
+
+        //grab (hopefully) isolated block
         servoULHug.setPosition(ULClose);
         servoURHug.setPosition(URClose);
 
-        sleep(500);
+        sleep(400);
 
         setMotors(-1 * scale, .33 * scale, .33 * scale, -1 * scale); //figure out how to strafe diagonally
-        sleep(300);
+        sleep(800);
+        stopMotors();
+    }
+
+    public void strafeLeftDiagonal() {
+        double scale = .75;
+        //diagonal strafe
+        setMotors(-.33 * scale, 1 * scale, 1 * scale, -.33 * scale); //figure out how to strafe diagonally
+        sleep(1000);
+        stopMotors();
+
+        //set both hugs to 45 degrees
+        servoULHug.setPosition(ULClose + ULOpen / 2);
+        servoURHug.setPosition(URClose + UROpen / 2);
+        sleep(200);
+
+        //back up and then move forward, hopefully pushing any stray blocks out of the way
+        setMotors(-.25, -.25, -.25, -.25);
+        sleep(250);
+        stopMotors();
+
+        sleep(400);
+
+        setMotors(.3, .3, .3, .3);
+        sleep(250);
+        stopMotors();
+
+        sleep(600);
+
+        //grab (hopefully) isolated block
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+
+        sleep(400);
+
+        setMotors(.33 * scale, -1 * scale, -1 * scale, .33 * scale); //figure out how to strafe diagonally
+        sleep(800);
+        stopMotors();
     }
 }
