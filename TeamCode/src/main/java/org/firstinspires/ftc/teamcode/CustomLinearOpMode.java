@@ -757,13 +757,7 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         sleep(100); */
 
         //lift block off ground
-        times.reset();
-        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
-        }
-        motorLiftL.setPower(0);
-        motorLiftR.setPower(0);
+        liftUp();
     }
 
     public void liftDown() {
@@ -771,6 +765,16 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         while (times.milliseconds() < 120 && opModeIsActive()) { //match value with value of grab block method
             motorLiftL.setPower(-1);
             motorLiftR.setPower(1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+    }
+
+    public void liftUp() {
+        times.reset();
+        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
         }
         motorLiftL.setPower(0);
         motorLiftR.setPower(0);
@@ -803,82 +807,6 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
     /*public boolean isButtonPressed() {
         return button.getVersion() == 1;
     }*/
-
-    public void getSecondBlockRed() throws InterruptedException {
-        /*
-        //1. drive up to pile with paddles open
-        servoURHug.setPosition((URClose + UROpen) / 2);
-        servoULHug.setPosition((ULClose + ULOpen) / 2);
-        //servoLRHug.setPosition((LRClose + LROpen) / 2);
-        //servoLLHug.setPosition((LLClose + LLOpen) / 2);
-        sleep(50);
-
-        setMotors(.5, .5, .5, .5);
-        sleep(200);
-        stopMotors();
-        sleep(50); */
-
-        //1b. strafe right
-        strafeRight(.5, -90);
-        sleep(500);
-        stopMotors();
-
-        telemetry.addLine("Done strafing");
-        telemetry.update();
-        sleep(500);
-
-        //2. open left, close right (flipped)
-        servoURHug.setPosition(UROpen);
-        servoULHug.setPosition(ULClose);
-        //servoLRHug.setPosition(LRClose);
-        //servoLLHug.setPosition(LLOpen);
-        sleep(100);
-
-        telemetry.addLine("Left is open");
-        telemetry.update();
-        sleep(500);
-
-        //3. drive forward into block
-        setMotors(.3, .3, .3, .3);
-        sleep(500);
-        stopMotors();
-        sleep(50);
-
-        telemetry.addLine("Done driving");
-        telemetry.update();
-        sleep(500);
-
-        //4. strafe left and close left paddle 45 degrees
-        strafeLeft(.5, -90); //
-        sleep(500);
-        stopMotors();
-        servoURHug.setPosition((URClose + UROpen) / 2);
-        //servoLLHug.setPosition(.45);
-        sleep(50);
-
-        telemetry.addLine("Done strafing left and closing");
-        telemetry.update();
-        sleep(500);
-
-        //5. strafe slowly and close left paddle slowly at same time
-        strafeRight(.5, -90);
-        sleep(400);
-        /*while (servoURHug.getPosition() < URClose) {
-            servoURHug.setPosition(servoURHug.getPosition() + .05);
-            //servoLLHug.setPosition(servoLLHug.getPosition() + .5);
-            sleep(50);
-        } */
-        stopMotors();
-
-        moveTime(400, .4);
-
-        servoURHug.setPosition(URClose);
-        servoULHug.setPosition(ULClose);
-
-        telemetry.addLine("Done strafing right and closing at same time");
-        telemetry.update();
-        sleep(500);
-    }
 
     public void strafeRightDiagonal() {
         double scale = .75;
@@ -942,6 +870,18 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         sleep(600);
 
         //grab (hopefully) isolated block
+
+        /*
+        //alternate method we could try???? (if it works add to other diagonal strafe method)
+        setMotors(.1, .1, .1, .1);
+        while ((servoURHug.getPosition() < URClose) || (servoULHug.getPosition() > ULClose)) {
+            servoURHug.setPosition(servoURHug.getPosition() + .5);
+            servoULHug.setPosition(servoULHug.getPosition() - .5);
+        }
+        stopMotors();
+        servoURHug.setPosition(URClose);
+        servoULHug.setPosition(ULClose);*/
+
         servoULHug.setPosition(ULClose);
         servoURHug.setPosition(URClose);
 
@@ -950,5 +890,108 @@ public class CustomLinearOpMode extends LinearOpModeCamera {
         setMotors(.33 * scale, -1 * scale, -1 * scale, .33 * scale); //figure out how to strafe diagonally
         sleep(800);
         stopMotors();
+    }
+
+    public void redSecondBlock() throws InterruptedException {
+        strafeRightDiagonal();
+
+        //servoULHug.setPosition(ULClose);
+        //times.reset();
+        //while (times.milliseconds() < 200) {
+        //    strafeRight(1, -90);
+        //}
+        //stopMotors();
+        //servoURHug.setPosition(URClose);
+
+        /*servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        sleep(500);
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        */
+
+        moveSquares(-.25, .4); //increase this maybe
+        stopMotors();
+        Thread.sleep(100);
+    }
+
+    public void blueSecondBlock() throws InterruptedException {
+        strafeLeftDiagonal();
+
+        /*servoULHug.setPosition(ULClose);
+        times.reset();
+        while (times.milliseconds() < 200) {
+            strafeRight(1, -90);
+        }
+        stopMotors();
+        servoURHug.setPosition(URClose);*/
+
+        /*
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        sleep(500);
+        times.reset();
+        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
+            motorLiftL.setPower(1);
+            motorLiftR.setPower(-1);
+        }
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+        */
+
+        moveSquares(-.15, .4);
+
+        stopMotors();
+        Thread.sleep(100);
+    }
+
+    public void thirdBlockRed() throws InterruptedException { //probably doesn't work
+        double scale = .75;
+        //diagonal strafe
+        setMotors(1 * scale, -.33 * scale, -.33 * scale, 1 * scale); //figure out how to strafe diagonally
+        sleep(1000);
+        stopMotors();
+
+        //set all hugs to 45 degrees
+        servoLLHug.setPosition((LLClose + LLOpen) / 2);
+        servoLRHug.setPosition((LRClose + LROpen) / 2);
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+        sleep(200);
+
+        //back up and then move forward, hopefully pushing any stray blocks out of the way
+        setMotors(-.25, -.25, -.25, -.25);
+        sleep(250);
+        stopMotors();
+
+        sleep(400);
+
+        setMotors(.3, .3, .3, .3);
+        sleep(250);
+        stopMotors();
+
+        sleep(600);
+
+        //grab (hopefully) isolated blocks
+        servoULHug.setPosition(ULClose);
+        servoURHug.setPosition(URClose);
+        servoLLHug.setPosition(LLClose);
+        servoLRHug.setPosition(LRClose);
+
+        sleep(400);
+
+        setMotors(-1 * scale, .33 * scale, .33 * scale, -1 * scale); //figure out how to strafe diagonally
+        sleep(800);
+        stopMotors();
+
+        moveSquares(-.25, .4); //increase this maybe
+        stopMotors();
+        Thread.sleep(100);
     }
 }

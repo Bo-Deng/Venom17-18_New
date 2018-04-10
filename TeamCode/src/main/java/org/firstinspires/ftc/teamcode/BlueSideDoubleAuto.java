@@ -43,42 +43,10 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         servoURHug.setPosition(URThread);
 
         moveSquares(.44, .4);
-        //method grabs block
-        strafeLeftDiagonal();
 
-        /*servoULHug.setPosition(ULClose);
-        times.reset();
-        while (times.milliseconds() < 200) {
-            strafeRight(1, -90);
-        }
-        stopMotors();
-        servoURHug.setPosition(URClose);*/
+        blueSecondBlock();
 
-        /*
-        servoULHug.setPosition(ULClose);
-        servoURHug.setPosition(URClose);
-        sleep(500);
-        times.reset();
-        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
-        }
-        motorLiftL.setPower(0);
-        motorLiftR.setPower(0);
-        */
-
-        moveSquares(-.15, .4);
-
-        stopMotors();
-        Thread.sleep(100);
-
-        times.reset();
-        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
-        }
-        motorLiftL.setPower(0);
-        motorLiftR.setPower(0);
+        liftUp();
 
         unflip();
         Pturn(90);
@@ -115,5 +83,49 @@ public class BlueSideDoubleAuto extends CustomLinearOpMode {
         stopMotors();
 
         backUp();
+
+        /*//third block???
+        Pturn(-90);
+        servoLLHug.setPosition(LLOpen);
+        servoLRHug.setPosition(LRThread);
+        servoULHug.setPosition(ULOpen);
+        servoURHug.setPosition(URThread);
+
+        moveSquares(.4, .4);
+        thirdBlockRed();
+
+        Pturn(90);
+
+        DebugLog.LOGE("startDistance ", "" + getLeftDistance());
+
+        if (template == 'L') {
+            //strafe left
+            strafeBlueAssistedPID(22, 90);
+            DebugLog.LOGE("VuMark: ", "L");
+
+        } else if (template == 'C') {
+            // align with center column
+            strafeBlueAssistedPID(40, 90);
+            DebugLog.LOGE("VuMark: ", "C");
+
+        } else if (template == 'R') {
+            //strafe right
+            strafeBlueAssistedPID(55.0, 90);
+            DebugLog.LOGE("VuMark: ", "R");
+        } stopMotors();
+
+        DebugLog.LOGE("End Distance: ", "" + getLeftDistance());
+
+        liftDown();
+        Thread.sleep(200);
+
+        servoLLHug.setPosition((LLClose + LLOpen) / 2);
+        servoLRHug.setPosition((LRClose + LROpen) / 2);
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+
+        wiggle(.4, 90);
+        stopMotors();
+        backUp(); */
     }
 }

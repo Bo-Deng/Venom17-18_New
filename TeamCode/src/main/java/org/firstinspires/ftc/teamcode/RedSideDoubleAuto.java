@@ -28,7 +28,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
 
         moveSquares(.65, .20);
         stopMotors();
-        Thread.sleep(400);
+        Thread.sleep(200);
 
        //back up slightly
         moveSquares(-.10, .20);
@@ -41,52 +41,16 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         servoULHug.setPosition(ULThread);
         servoURHug.setPosition(UROpen);
         moveSquares(.44, .4);
-        //method grabs second block
-        strafeRightDiagonal();
 
-        //servoULHug.setPosition(ULClose);
-        //times.reset();
-        //while (times.milliseconds() < 200) {
-        //    strafeRight(1, -90);
-        //}
-        //stopMotors();
-        //servoURHug.setPosition(URClose);
+        redSecondBlock();
 
-        /*servoULHug.setPosition(ULClose);
-        servoURHug.setPosition(URClose);
-        sleep(500);
-        times.reset();
-        while (times.milliseconds() < 300 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
-        }
-        motorLiftL.setPower(0);
-        motorLiftR.setPower(0);
-
-        */
-
-        //getSecondBlockRed();
-
-
-        moveSquares(-.25, .4); //increase this maybe
-        stopMotors();
-        Thread.sleep(100);
-
-        times.reset();
-        while (times.milliseconds() < 400 && opModeIsActive()) { //increase this value maybe (500 originally, and used to be based on time)
-            motorLiftL.setPower(1);
-            motorLiftR.setPower(-1);
-        }
-        motorLiftL.setPower(0);
-        motorLiftR.setPower(0);
+        liftUp();
 
         unflip();
         Pturn(90);
 
-
         DebugLog.LOGE("startDistance ", "" + getRightDistance());
 
-        boolean side = true;
         if (template == 'L') {
             //strafe left
             strafeRedAssistedPID(55.4, 90);
@@ -104,7 +68,7 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         } stopMotors();
 
         liftDown();
-        Thread.sleep(400);
+        Thread.sleep(200);
 
         servoLLHug.setPosition((LLClose + LLOpen) / 2);
         servoLRHug.setPosition((LRClose + LROpen) / 2);
@@ -115,12 +79,46 @@ public class RedSideDoubleAuto extends CustomLinearOpMode {
         stopMotors();
         backUp();
 
-        //Pturn(-90);
-        //Pturn(-90);
+        /* //third block???
+        Pturn(-90);
+        servoLLHug.setPosition(LLThread);
+        servoLRHug.setPosition(LROpen);
+        servoULHug.setPosition(ULThread);
+        servoURHug.setPosition(UROpen);
 
-        //getSecondBlockRed();
+        moveSquares(.4, .4);
+        thirdBlockRed();
 
-        //Pturn(90);
-        //Pturn(90);
+        Pturn(90);
+
+        DebugLog.LOGE("startDistance ", "" + getRightDistance());
+
+        if (template == 'L') {
+            //strafe left
+            strafeRedAssistedPID(55.4, 90);
+            DebugLog.LOGE("Template: ", "L");
+
+        } else if (template == 'C') {
+            // align with center column
+            strafeRedAssistedPID( 36.7, 90);
+            DebugLog.LOGE("Template: ", "C");
+
+        } else if (template == 'R') {
+            //strafe right
+            strafeRedAssistedPID(21.7, 90);
+            DebugLog.LOGE("Template: ", "R");
+        } stopMotors();
+
+        liftDown();
+        Thread.sleep(200);
+
+        servoLLHug.setPosition((LLClose + LLOpen) / 2);
+        servoLRHug.setPosition((LRClose + LROpen) / 2);
+        servoULHug.setPosition((ULClose + ULOpen) / 2);
+        servoURHug.setPosition((URClose + UROpen) / 2);
+
+        wiggle(.4, 90);
+        stopMotors();
+        backUp(); */
     }
 }
